@@ -20,25 +20,25 @@ unsigned long temp;
 
 void foto_init(void)
 {
-  // �������� ���� �����������
+  //
   ROM_SysCtlPeripheralEnable(CCP_FOTO_GPIO_PERIPH);
-  ROM_SysCtlPeripheralEnable(CCP_FOTO_TIMER_PERIPH); // �������� ������������ �������
-  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_CFG)=TIMER_CFG_16_BIT; // �������� ��������� ��� �������.
+  ROM_SysCtlPeripheralEnable(CCP_FOTO_TIMER_PERIPH);
+  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_CFG)=TIMER_CFG_16_BIT;
   HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_TAMR)=TIMER_TAMR_TAMR_CAP|TIMER_TAMR_TACMR|TIMER_TAMR_TACDIR;
-  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_CTL)=TIMER_CTL_TAEVENT_POS; // �������� �� �������������� ������. 
-  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_TAILR)=8000000; /// ����� �����
-  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_IMR)=TIMER_IMR_CAEIM; // �������� ������ ����������
-  //������������� ���� �� ���� ���������
+  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_CTL)=TIMER_CTL_TAEVENT_POS;
+  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_TAILR)=8000000;
+  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_IMR)=TIMER_IMR_CAEIM;
+
   ROM_GPIOPinConfigure(CCP_FOTO_GPIO_PIN_CFG);
   ROM_GPIOPinTypeTimer(CCP_FOTO_GPIO_BASE,CCP_FOTO_GPIO_PIN);
   ROM_IntEnable(INT_WTIMER5A);
-  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_CTL)|=TIMER_CTL_TAEN; // ��������� ������
+  HWREG(CCP_FOTO_TIMER_BASE+TIMER_O_CTL)|=TIMER_CTL_TAEN;
 }
 
 //*******************************************************************************************************
 //
 //
-// ������������ ������� 5 ������� ��������� �� �����������
+//
 //
 //
 //*******************************************************************************************************

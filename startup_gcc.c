@@ -42,6 +42,8 @@ static void IntDefaultHandler(void);
 //*****************************************************************************
 extern int main(void);
 extern void WTimer5AIsr(void);
+extern void WTimer3AIsr(void);
+extern void WTimer3BIsr(void);
 //*****************************************************************************
 //
 // Reserve space for the system stack.
@@ -175,8 +177,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Wide Timer 1 subtimer B
     IntDefaultHandler,                      // Wide Timer 2 subtimer A
     IntDefaultHandler,                      // Wide Timer 2 subtimer B
-    IntDefaultHandler,                      // Wide Timer 3 subtimer A
-    IntDefaultHandler,                      // Wide Timer 3 subtimer B
+	WTimer3AIsr,                            // Wide Timer 3 subtimer A
+	WTimer3AIsr,                            // Wide Timer 3 subtimer B
     IntDefaultHandler,                      // Wide Timer 4 subtimer A
     IntDefaultHandler,                      // Wide Timer 4 subtimer B
 	WTimer5AIsr,                            // Wide Timer 5 subtimer A
