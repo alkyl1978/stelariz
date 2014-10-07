@@ -18,7 +18,7 @@
 #include "lcd.h"
 #include "foto.h"
 //****************************************************************************************
-// ���������� ����������
+//
 //
 //****************************************************************************************
 volatile unsigned long tick=0;
@@ -28,21 +28,21 @@ volatile unsigned long serv_0=0;
 //****************************************************************************************
 //
 //
-// ��������� ��������� ���������� �������
+//
 //
 //
 //*******************************************************************************************************
 void SysTickTimer_init(void)
 {
-  // ����������� ��������� ������
-  ROM_SysTickPeriodSet(ROM_SysCtlClockGet()/100); // ���������� � 1 ��
-  ROM_SysTickEnable(); // ��������� ������
-  ROM_SysTickIntEnable(); // ��������� ���������� �� �������
+  //
+  ROM_SysTickPeriodSet(ROM_SysCtlClockGet()/100);
+  ROM_SysTickEnable();
+  ROM_SysTickIntEnable();
 }
 //******************************************************************************************************
 //
 //
-// ��������� ������
+//
 //
 //
 //******************************************************************************************************
@@ -53,28 +53,28 @@ void SysTickIntHandler(void)
 //******************************************************************************************************
 //
 //
-// ������� ���� ���������
+//
 //
 //
 //******************************************************************************************************
 int main()
 {
   
-  ROM_FPUEnable(); // ��������� ����������
+  ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
-  ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);  // ����������� �������� ���������
+  ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
   tick=ROM_SysCtlClockGet();
   tick_dvig=ROM_SysCtlClockGet()/20000;
   tick_serv=ROM_SysCtlClockGet()/50;
   serv_0=ROM_SysCtlClockGet()/430;
-  servo_init(); // ��������� ��������� ����
-  led_init(); // ��������� ��������� �����������
-  lcd_init(); // ��������� ��������� LCD
-  Dvig_init(); // ��������� ��������� ���������
-  foto_init();  // ��������� ��������� �����������
-  UARTStdioInit(0); // ��������� ��������� ��� �����
-  ROM_IntMasterEnable(); // �������� ���������� ����������
-  // ������� ��������� �����������
+  servo_init();
+  led_init();
+  lcd_init();
+  Dvig_init();
+  foto_init();
+  UARTStdioInit(0);
+  ROM_IntMasterEnable();
+
   UARTprintf("Welcome to the Stellaris LM4F120 LaunchPad!\n");
   lcd_goto(0,0);
   lcd_puts("---------------"); 
@@ -84,7 +84,7 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
-  // �������� ���� ���������
+
   while(1)
   {
    
