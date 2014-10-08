@@ -11,12 +11,15 @@
 #include "inc/rom.h"
 #include "inc/pin_map.h"
 #include "inc/uartstdio.h"
+#include "inc/cmdline.h"
 #include "servo.h"
 #include "led.h"
 #include "dvig.h"
 #include "dat_scor.h"
 #include "lcd.h"
 #include "foto.h"
+//****************************************************************************************
+#define APP_INPUT_BUF_SIZE               128
 //****************************************************************************************
 //
 //
@@ -25,6 +28,7 @@ volatile unsigned long tick=0;
 volatile unsigned long tick_dvig=0;
 volatile unsigned long tick_serv=0;
 volatile unsigned long serv_0=0;
+volatile unsigned char g_cInput[APP_INPUT_BUF_SIZE];
 //****************************************************************************************
 //
 //
@@ -59,7 +63,7 @@ void SysTickIntHandler(void)
 //******************************************************************************************************
 int main()
 {
-  
+  unsigned long lCommandStatus;
   ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
   ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
@@ -84,10 +88,39 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
-
-  while(1)
+  
+   while(1)
   {
-   
+   while(UARTPeek('\r') == -1)
+    {
+      UARTprintf("\n");
+      UARTprintf(">");
+      //
+      // millisecond delay.  A SysCtlSleep() here would also be OK.
+      //
+     // ROM_SysCtlDelay(ROM_SysCtlClockGet() / (1000 / 3));
+      //
+      // считываем принятые данные
+      //
+      UARTgets((char *)&g_cInput,sizeof(g_cInput));
+      //
+      //
+      //обрабатываем принятые данные 
+      //
+      lCommandStatus = CmdLineProcess((char *)&g_cInput);
+      if(lCommandStatus == CMDLINE_BAD_CMD)
+      {
+          UARTprintf("Bad command!\n");
+      }
+      //
+      // мало аргументов
+      //
+      else if(lCommandStatus == CMDLINE_TOO_MANY_ARGS)
+      {
+          UARTprintf("Too many arguments for command processor!\n");
+      }
+    }
+
   }
   return 0;
 }
