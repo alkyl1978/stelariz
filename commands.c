@@ -1,26 +1,3 @@
-//*****************************************************************************
-//
-// rgb_commands.c - Command line functionality implementation
-//
-// Copyright (c) 2012 Texas Instruments Incorporated.  All rights reserved.
-// Software License Agreement
-// 
-// Texas Instruments (TI) is supplying this software for use solely and
-// exclusively on TI's microcontroller products. The software is owned by
-// TI and/or its suppliers, and is protected under applicable copyright
-// laws. You may not combine this software with "viral" open-source
-// software in order to form a larger program.
-// 
-// THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
-// NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
-// NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
-// CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
-// DAMAGES, FOR ANY REASON WHATSOEVER.
-// 
-// This is part of revision 9453 of the EK-LM4F120XL Firmware Package.
-//
-//*****************************************************************************
 #include "inc/hw_types.h"
 #include "inc/ustdlib.h"
 #include "inc/hw_ints.h"
@@ -52,10 +29,16 @@ tCmdLineEntry g_sCmdTable[] =
     {"X",        CMD_POZ_X,     " : position  X"},
     {"Y",        CMD_POZ_Y,     " : position  Y"},
     {"Z",        CMD_POZ_Z,     " : position  Y"},
+    {"R0",       CMD_POZ_R0,    " : pwm rolik 0"},
     {0,          0,                     0 }
 };
 
 const int NUM_CMD = sizeof(g_sCmdTable)/sizeof(tCmdLineEntry);
+
+int CMD_POZ_R0 (int argc, char **argv)
+{
+  return 0;
+}
 
 // установка позиции
 int CMD_POZ_X (int argc, char **argv)
