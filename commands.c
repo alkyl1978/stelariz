@@ -38,11 +38,31 @@ const int NUM_CMD = sizeof(g_sCmdTable)/sizeof(tCmdLineEntry);
 
 int CMD_POZ_R1 (int argc, char **argv)
 {
+  unsigned long temp;
+  if(argc==2)
+  {
+    temp=ustrtoul(argv[1], 0, 0);
+    lcd_goto(3,0);
+    lcd_puts("                ");
+    lcd_goto(3,0);
+    lcd_puts("R1 PWM value =");
+    lcd_puts(argv[1]);
+  }
   return 0;
 }
 
 int CMD_POZ_R0 (int argc, char **argv)
 {
+  unsigned long temp;
+  if(argc==2)
+  {
+    temp=ustrtoul(argv[1], 0, 0);
+    lcd_goto(3,0);
+    lcd_puts("                ");
+    lcd_goto(3,0);
+    lcd_puts("R0 PWM value =");
+    lcd_puts(argv[1]);
+  }
   return 0;
 }
 
