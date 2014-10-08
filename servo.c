@@ -28,8 +28,8 @@ extern volatile unsigned long serv_0;
 //********************************************************************************************************
 void servo_init(void)
 {
-  //******************************************************************************************************
-  // ����������� ��� �������������
+//******************************************************************************************************
+//
 //******************************************************************************************************
   ROM_SysCtlPeripheralEnable(SERV_X_GPIO_PERIPH);
   ROM_SysCtlPeripheralEnable(SERV_X_TIMER_PERIPH);
@@ -80,7 +80,7 @@ void servo_init(void)
   ROM_GPIOPinTypeTimer(SERV_Z_GPIO_BASE, SERV_Z_GPIO_PIN);
   ROM_GPIOPadConfigSet(SERV_Z_GPIO_BASE, SERV_Z_GPIO_PIN, GPIO_STRENGTH_8MA_SC,
                      GPIO_PIN_TYPE_STD);
-// ������� ��������� �������� ����
+//
   ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, serv_0);
   ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, serv_0);
   ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_0);
