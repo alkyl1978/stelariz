@@ -30,10 +30,16 @@ tCmdLineEntry g_sCmdTable[] =
     {"Y",        CMD_POZ_Y,     " : position  Y"},
     {"Z",        CMD_POZ_Z,     " : position  Y"},
     {"R0",       CMD_POZ_R0,    " : pwm rolik 0"},
+    {"R1",       CMD_POZ_R1,    " : pwm rolik 1"},
     {0,          0,                     0 }
 };
 
 const int NUM_CMD = sizeof(g_sCmdTable)/sizeof(tCmdLineEntry);
+
+int CMD_POZ_R1 (int argc, char **argv)
+{
+  return 0;
+}
 
 int CMD_POZ_R0 (int argc, char **argv)
 {

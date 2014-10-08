@@ -42,6 +42,7 @@
 // when the corresponding command is typed into the command line.
 //
 //*****************************************************************************
+extern int CMD_POZ_R1 (int argc, char **argv);
 extern int CMD_POZ_R0 (int argc, char **argv);
 extern int CMD_help (int argc, char **argv);
 extern int CMD_POZ_X (int argc, char **argv);
