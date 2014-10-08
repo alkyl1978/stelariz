@@ -103,7 +103,7 @@ int CMD_POZ_Z (int argc, char **argv)
     lcd_puts("Z Angle =");
     lcd_puts(argv[1]);
     temp=ustrtoul(argv[1], 0, 0);
-    temp=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/11200000)*temp;
+    temp=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
     ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, temp);
   }
   return 0;
