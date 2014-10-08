@@ -48,6 +48,7 @@ int CMD_POZ_R1 (int argc, char **argv)
     lcd_goto(3,0);
     lcd_puts("R1 PWM value =");
     lcd_puts(argv[1]);
+    ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER,500);
   }
   return 0;
 }
@@ -63,6 +64,7 @@ int CMD_POZ_R0 (int argc, char **argv)
     lcd_goto(3,0);
     lcd_puts("R0 PWM value =");
     lcd_puts(argv[1]);
+    ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER,500);
   }
   return 0;
 }
