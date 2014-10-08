@@ -28,6 +28,7 @@ volatile unsigned long tick=0;
 volatile unsigned long tick_dvig=0;
 volatile unsigned long tick_serv=0;
 volatile unsigned long serv_0=0;
+volatile unsigned long dvig_napr[1];
 volatile unsigned char g_cInput[APP_INPUT_BUF_SIZE];
 //****************************************************************************************
 //
@@ -71,6 +72,8 @@ int main()
   tick_dvig=ROM_SysCtlClockGet()/20000;
   tick_serv=ROM_SysCtlClockGet()/50;
   serv_0=ROM_SysCtlClockGet()/430;
+  dvig_napr[0]=0;
+  dvig_napr[1]=0;
   servo_init();
   led_init();
   lcd_init();
