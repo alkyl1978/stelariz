@@ -16,6 +16,7 @@
 #include "inc/cmdline.h"
 #include "servo.h"
 #include "commands.h"
+#include "dvig.h"
 #include "lcd.h"
 
 //*****************************************************************************

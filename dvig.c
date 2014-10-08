@@ -61,8 +61,8 @@ void Dvig_init(void)
   ROM_TimerPrescaleSet(PWM1_TIMER_BASE, PWM1_TIMER, 0);
   ROM_TimerPrescaleMatchSet(PWM0_TIMER_BASE, PWM0_TIMER, 0);
   ROM_TimerPrescaleMatchSet(PWM1_TIMER_BASE, PWM1_TIMER, 0);
-  ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER,0);
-  ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER,0);
+  ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER,-1);
+  ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER,-1);
   ROM_TimerLoadSet(PWM0_TIMER_BASE, PWM0_TIMER,tick_dvig);
   ROM_TimerLoadSet(PWM1_TIMER_BASE, PWM1_TIMER,tick_dvig);
   //************************************************************************************************************
