@@ -19,6 +19,8 @@
 #include "dvig.h"
 #include "lcd.h"
 
+extern volatile unsigned long tick_dvig;
+extern volatile unsigned long dvig_napr[1];
 //*****************************************************************************
 //
 // Table of valid command strings, callback functions and help messages.
@@ -43,11 +45,30 @@ int CMD_POZ_R1 (int argc, char **argv)
   if(argc==2)
   {
     temp=ustrtoul(argv[1], 0, 0);
+    if (temp>100) return 0;
+    if (temp==0)
+    {
+      ROM_GPIOPinWrite(PWM1_NAPR_A_GPIO_BASE,PWM1_NAPR_A_GPIO_PIN,0);
+      ROM_GPIOPinWrite(PWM1_NAPR_B_GPIO_BASE,PWM1_NAPR_B_GPIO_PIN,0);
+      ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER,tick_dvig-1);
+    }
     lcd_goto(3,0);
     lcd_puts("                ");
     lcd_goto(3,0);
     lcd_puts("R1 PWM value =");
     lcd_puts(argv[1]);
+    temp=((tick_dvig-1)*temp)/100;
+    ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER,temp);
+    if(dvig_napr[1]==1)
+    {
+      ROM_GPIOPinWrite(PWM1_NAPR_A_GPIO_BASE,PWM1_NAPR_A_GPIO_PIN,PWM1_NAPR_A_GPIO_PIN);
+      ROM_GPIOPinWrite(PWM1_NAPR_B_GPIO_BASE,PWM1_NAPR_B_GPIO_PIN,0);
+    }
+    else
+    {
+      ROM_GPIOPinWrite(PWM1_NAPR_A_GPIO_BASE,PWM1_NAPR_A_GPIO_PIN,0);
+      ROM_GPIOPinWrite(PWM1_NAPR_B_GPIO_BASE,PWM1_NAPR_B_GPIO_PIN,PWM1_NAPR_B_GPIO_PIN);
+    }
   }
   return 0;
 }
@@ -58,11 +79,30 @@ int CMD_POZ_R0 (int argc, char **argv)
   if(argc==2)
   {
     temp=ustrtoul(argv[1], 0, 0);
+    if (temp>100) return 0;
+    if (temp==0)
+    {
+      ROM_GPIOPinWrite(PWM0_NAPR_A_GPIO_BASE,PWM0_NAPR_A_GPIO_PIN,0);
+      ROM_GPIOPinWrite(PWM0_NAPR_B_GPIO_BASE,PWM0_NAPR_B_GPIO_PIN,0);
+      ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER,tick_dvig-1);
+    }
     lcd_goto(3,0);
     lcd_puts("                ");
     lcd_goto(3,0);
     lcd_puts("R0 PWM value =");
     lcd_puts(argv[1]);
+    temp=((tick_dvig-1)*temp)/100;
+    ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER,temp);
+    if(dvig_napr[0]==1)
+    {
+      ROM_GPIOPinWrite(PWM0_NAPR_A_GPIO_BASE,PWM0_NAPR_A_GPIO_PIN,PWM0_NAPR_A_GPIO_PIN);
+      ROM_GPIOPinWrite(PWM0_NAPR_B_GPIO_BASE,PWM0_NAPR_B_GPIO_PIN,0);
+    }
+    else
+    {
+      ROM_GPIOPinWrite(PWM0_NAPR_A_GPIO_BASE,PWM0_NAPR_A_GPIO_PIN,0);
+      ROM_GPIOPinWrite(PWM0_NAPR_B_GPIO_BASE,PWM0_NAPR_B_GPIO_PIN,PWM0_NAPR_B_GPIO_PIN);
+    }
   }
   return 0;
 }
