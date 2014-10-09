@@ -6,6 +6,7 @@
   <configuration>
     <name>Debug</name>
     <outputs>
+      <file>$PROJ_DIR$\lm4f\driverlib\rom.h</file>
       <file>$PROJ_DIR$\Debug\Obj\stelaris.pbd</file>
       <file>$PROJ_DIR$\Debug\Obj\dvig.pbi</file>
       <file>$TOOLKIT_DIR$\config\linker\TexasInstruments\LM4F120H5QR.icf</file>
@@ -104,7 +105,7 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 74</file>
+          <file> 75</file>
         </tool>
       </outputs>
     </file>
@@ -113,7 +114,192 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 11</file>
+          <file> 12</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 28</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55 14</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55 14</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 71</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 49 33 22 54 60 16 89 81 58 35 64 0 45 79 41 55 14 37</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49 33 22 54 60 16 89 81 58 35 64 45 79 41 55 14 37</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\led.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 24</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 74</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\lib\cmdline.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 10</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 40</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 44 66 67 17 36 62 63 68 77 61 5</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\lib\uartstdio.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 72</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 73</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 46 66 67 17 36 62 63 68 20 39 59 48 80 82 19 52 69 87 18 6 51 34</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\dvig.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 83</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 2</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\servo.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 26</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 76</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\dat_scor.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 21</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 43</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\c.out</name>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 3 21 83 13 12 24 71 26 70 92 53 57 50</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup_ewarm.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 70</file>
         </tool>
         <tool>
           <name>BICOMP</name>
@@ -123,192 +309,11 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54 13</file>
+          <file> 65 59</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54 13</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\main.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 70</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 29</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 48 32 21 53 59 15 88 80 57 34 63</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 48 32 21 53 59 15 88 80 57 34 63 44 78 40 54 13 36</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\led.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 23</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 73</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\lib\cmdline.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 9</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 39</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 43 65 66 16 35 61 62 67 76 60 4</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\lib\uartstdio.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 71</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 72</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 45 65 66 16 35 61 62 67 19 38 58 47 79 81 18 51 68 86 17 5 50 33</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\dvig.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 82</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 1</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\servo.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 25</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 75</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\dat_scor.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 20</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 42</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\c.out</name>
-      <inputs>
-        <tool>
-          <name>ILINK</name>
-          <file> 2 20 82 12 11 23 70 25 69 91 52 56 49</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\startup_ewarm.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 69</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 26</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 64 58</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 64 58</file>
+          <file> 65 59</file>
         </tool>
       </inputs>
     </file>
@@ -317,17 +322,17 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 85</file>
+          <file> 86</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 22</file>
+          <file> 23</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 58 41 45 65 66 16 35 61 62 67 19 5 38 14 46 33 50 68 81 90 18 17 4 44 89 40 13</file>
+          <file> 59 42 46 66 67 17 36 62 63 68 20 6 39 15 47 34 51 69 82 91 19 18 5 45 90 41 14</file>
         </tool>
       </inputs>
     </file>
@@ -336,17 +341,17 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 3</file>
+          <file> 4</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 28</file>
+          <file> 29</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 43 65 66 16 35 61 62 67 76 60 79 41 45</file>
+          <file> 44 66 67 17 36 62 63 68 77 61 80 42 46</file>
         </tool>
       </inputs>
     </file>
@@ -355,21 +360,21 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 12</file>
+          <file> 13</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 37</file>
+          <file> 38</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54 36</file>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55 37</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 19 5 38 14 58 46 33 50 68 81 90 18 44 78 40 54 36</file>
+          <file> 20 6 39 15 59 47 34 51 69 82 91 19 45 79 41 55 37</file>
         </tool>
       </inputs>
     </file>
