@@ -147,7 +147,7 @@ int CMD_POZ_Y (int argc, char **argv)
     temp=ustrtoul(argv[1], 0, 0);
     serv_Y_Angle=temp;
     serv_Y_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
-    ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER,serv_Y_0);
+    ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER,serv_Y_0);
   }
   return 0;
 }
@@ -165,7 +165,7 @@ int CMD_POZ_Z (int argc, char **argv)
     temp=ustrtoul(argv[1], 0, 0);
     serv_Z_Angle=temp;
     serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
-    ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER,serv_Z_0);
+    ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER,serv_Z_0);
   }
   return 0;
 }
