@@ -18,6 +18,10 @@
 //
 //********************************************************************************************************
 extern volatile unsigned long tick_serv;
+extern volatile unsigned long serv_X_0;
+extern volatile unsigned long serv_Y_0;
+extern volatile unsigned long serv_Z_0;
+
 //********************************************************************************************************
 //
 //
@@ -80,7 +84,7 @@ void servo_init(void)
   ROM_GPIOPadConfigSet(SERV_Z_GPIO_BASE, SERV_Z_GPIO_PIN, GPIO_STRENGTH_8MA_SC,
                      GPIO_PIN_TYPE_STD);
 //
-  ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, serv_0);
-  ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, serv_0);
-  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_0);
+ ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, serv_X_0);
+  ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, serv_Y_0);
+  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_Z_0);
 }
