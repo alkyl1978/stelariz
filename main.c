@@ -76,6 +76,11 @@ int main()
   tick=ROM_SysCtlClockGet();
   tick_dvig=ROM_SysCtlClockGet()/20000;
   tick_serv=ROM_SysCtlClockGet()/50;
+  
+  serv_X_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_X_Angle;
+  serv_Y_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Y_Angle;
+  serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Z_Angle;
+  
   dvig_napr[0]=0;
   dvig_napr[1]=0;
   servo_init();
