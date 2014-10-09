@@ -27,7 +27,15 @@
 volatile unsigned long tick=0;
 volatile unsigned long tick_dvig=0;
 volatile unsigned long tick_serv=0;
-volatile unsigned long serv_0=0;
+
+volatile unsigned long serv_X_0=0;
+volatile unsigned long serv_Y_0=0;
+volatile unsigned long serv_Z_0=0;
+
+volatile unsigned long serv_X_Angle=90;
+volatile unsigned long serv_Y_Angle=90;
+volatile unsigned long serv_Z_Angle=80;
+
 volatile unsigned long dvig_napr[1];
 volatile unsigned char g_cInput[APP_INPUT_BUF_SIZE];
 //****************************************************************************************
@@ -71,7 +79,9 @@ int main()
   tick=ROM_SysCtlClockGet();
   tick_dvig=ROM_SysCtlClockGet()/20000;
   tick_serv=ROM_SysCtlClockGet()/50;
-  serv_0=ROM_SysCtlClockGet()/430;
+  serv_X_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_X_Angle;
+  serv_Y_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Y_Angle;
+  serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Z_Angle;
   dvig_napr[0]=0;
   dvig_napr[1]=0;
   servo_init();

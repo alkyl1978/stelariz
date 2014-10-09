@@ -21,6 +21,14 @@
 
 extern volatile unsigned long tick_dvig;
 extern volatile unsigned long dvig_napr[1];
+
+extern volatile unsigned long serv_X_0;
+extern volatile unsigned long serv_Y_0;
+extern volatile unsigned long serv_Z_0;
+
+extern volatile unsigned long serv_X_Angle;
+extern volatile unsigned long serv_Y_Angle;
+extern volatile unsigned long serv_Z_Angle;
 //*****************************************************************************
 //
 // Table of valid command strings, callback functions and help messages.
@@ -119,8 +127,9 @@ int CMD_POZ_X (int argc, char **argv)
     lcd_goto(0,0);
     lcd_puts("X Angle =");
     lcd_puts(argv[1]);
-    temp=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
-    ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, temp);
+    serv_X_Angle=temp;
+    serv_X_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
+    ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER,serv_X_0);
   }
   return 0;
 }
@@ -136,8 +145,9 @@ int CMD_POZ_Y (int argc, char **argv)
     lcd_puts("Y Angle =");
     lcd_puts(argv[1]);
     temp=ustrtoul(argv[1], 0, 0);
-    temp=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
-    ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, temp);
+    serv_Y_Angle=temp;
+    serv_Y_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
+    ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER,serv_Y_0);
   }
   return 0;
 }
@@ -153,8 +163,9 @@ int CMD_POZ_Z (int argc, char **argv)
     lcd_puts("Z Angle =");
     lcd_puts(argv[1]);
     temp=ustrtoul(argv[1], 0, 0);
-    temp=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
-    ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, temp);
+    serv_Z_Angle=temp;
+    serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*temp;
+    ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER,serv_Z_0);
   }
   return 0;
 }
