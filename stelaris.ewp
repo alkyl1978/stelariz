@@ -1869,12 +1869,6 @@
     </settings>
   </configuration>
   <file>
-    <name>$PROJ_DIR$\lib\cmdline.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\commands.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\dat_scor.c</name>
   </file>
   <file>
@@ -1897,12 +1891,6 @@
   </file>
   <file>
     <name>$PROJ_DIR$\startup_ewarm.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\lib\uartstdio.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\lib\ustdlib.c</name>
   </file>
 </project>
 

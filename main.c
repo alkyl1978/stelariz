@@ -10,16 +10,13 @@
 #include "inc/timer.h"
 #include "inc/rom.h"
 #include "inc/pin_map.h"
-#include "inc/uartstdio.h"
-#include "inc/cmdline.h"
 #include "servo.h"
 #include "led.h"
 #include "dvig.h"
 #include "dat_scor.h"
 #include "lcd.h"
 #include "foto.h"
-//****************************************************************************************
-#define APP_INPUT_BUF_SIZE               128
+
 //****************************************************************************************
 //
 //
@@ -37,7 +34,6 @@ volatile unsigned long serv_Y_Angle=90;
 volatile unsigned long serv_Z_Angle=80;
 
 volatile unsigned long dvig_napr[1];
-volatile unsigned char g_cInput[APP_INPUT_BUF_SIZE];
 //****************************************************************************************
 //
 //
@@ -89,10 +85,7 @@ int main()
   lcd_init();
   Dvig_init();
   foto_init();
-  UARTStdioInit(0);
   ROM_IntMasterEnable();
-
-  UARTprintf("Welcome to the Stellaris LM4F120 LaunchPad!\n");
   lcd_goto(0,0);
   lcd_puts("---------------"); 
   lcd_goto(1,0);
@@ -104,36 +97,6 @@ int main()
   
    while(1)
   {
-   while(UARTPeek('\r') == -1)
-    {
-      UARTprintf("\n");
-      UARTprintf(">");
-      //
-      // millisecond delay.  A SysCtlSleep() here would also be OK.
-      //
-     // ROM_SysCtlDelay(ROM_SysCtlClockGet() / (1000 / 3));
-      //
-      // считываем принятые данные
-      //
-      UARTgets((char *)&g_cInput,sizeof(g_cInput));
-      //
-      //
-      //обрабатываем принятые данные 
-      //
-      lCommandStatus = CmdLineProcess((char *)&g_cInput);
-      if(lCommandStatus == CMDLINE_BAD_CMD)
-      {
-          UARTprintf("Bad command!\n");
-      }
-      //
-      // мало аргументов
-      //
-      else if(lCommandStatus == CMDLINE_TOO_MANY_ARGS)
-      {
-          UARTprintf("Too many arguments for command processor!\n");
-      }
-    }
-
+    
   }
-  return 0;
 }
