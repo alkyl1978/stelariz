@@ -1869,12 +1869,6 @@
     </settings>
   </configuration>
   <file>
-    <name>$PROJ_DIR$\lib\cmdline.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\commands.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\dat_scor.c</name>
   </file>
   <file>

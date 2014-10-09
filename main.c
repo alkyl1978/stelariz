@@ -64,7 +64,6 @@ void SysTickIntHandler(void)
 //******************************************************************************************************
 int main()
 {
-  unsigned long lCommandStatus;
   ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
   ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
@@ -79,10 +78,7 @@ int main()
   lcd_init();
   Dvig_init();
   foto_init();
-  UARTStdioInit(0);
   ROM_IntMasterEnable();
-
-  UARTprintf("Welcome to the Stellaris LM4F120 LaunchPad!\n");
   lcd_goto(0,0);
   lcd_puts("---------------"); 
   lcd_goto(1,0);
@@ -90,40 +86,10 @@ int main()
   lcd_goto(2,0);
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
-  lcd_puts("---------------"); 
-  
+  lcd_puts("---------------");   
    while(1)
   {
-   while(UARTPeek('\r') == -1)
-    {
-      UARTprintf("\n");
-      UARTprintf(">");
-      //
-      // millisecond delay.  A SysCtlSleep() here would also be OK.
-      //
-     // ROM_SysCtlDelay(ROM_SysCtlClockGet() / (1000 / 3));
-      //
-      // считываем принятые данные
-      //
-      UARTgets((char *)&g_cInput,sizeof(g_cInput));
-      //
-      //
-      //обрабатываем принятые данные 
-      //
-      lCommandStatus = CmdLineProcess((char *)&g_cInput);
-      if(lCommandStatus == CMDLINE_BAD_CMD)
-      {
-          UARTprintf("Bad command!\n");
-      }
-      //
-      // мало аргументов
-      //
-      else if(lCommandStatus == CMDLINE_TOO_MANY_ARGS)
-      {
-          UARTprintf("Too many arguments for command processor!\n");
-      }
-    }
-
+   
   }
   return 0;
 }
