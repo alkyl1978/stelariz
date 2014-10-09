@@ -1,0 +1,10 @@
+*.d
+*.o
+*.axf
+*.bin
+*.out
+*.lib
+*.a
+*.obj
+/Debug/
+/settings/
