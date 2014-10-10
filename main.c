@@ -23,7 +23,7 @@
 volatile unsigned long tick=0;
 volatile unsigned long tick_dvig=0;
 volatile unsigned long tick_serv=0;
-volatile unsigned long serv_0=0;
+
 //****************************************************************************************
 //
 //
@@ -65,7 +65,6 @@ int main()
   tick=ROM_SysCtlClockGet();
   tick_dvig=ROM_SysCtlClockGet()/20000;
   tick_serv=ROM_SysCtlClockGet()/50;
-  serv_0=ROM_SysCtlClockGet()/430;
   servo_init();
   led_init();
   lcd_init();
