@@ -10,13 +10,12 @@
 #include "inc/timer.h"
 #include "inc/rom.h"
 #include "inc/pin_map.h"
-#include "inc/uartstdio.h"
-#include "servo.h"
-#include "led.h"
-#include "dvig.h"
-#include "dat_scor.h"
-#include "lcd.h"
-#include "foto.h"
+#include "include/servo.h"
+#include "include/led.h"
+#include "include/dvig.h"
+#include "include/dat_scor.h"
+#include "include/lcd.h"
+#include "include/foto.h"
 //****************************************************************************************
 //
 //
