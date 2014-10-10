@@ -1,6 +1,6 @@
 /******************************************************************************
  *
- * blinky.ld - Linker configuration file for blinky.
+ * stelaris.ld - Linker configuration file for blinky.
  *
  * Copyright (c) 2012 Texas Instruments Incorporated.  All rights reserved.
  * Software License Agreement
