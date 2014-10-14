@@ -16,6 +16,7 @@
 #include "dat_scor.h"
 #include "lcd.h"
 #include "foto.h"
+#include "modbus.h"
 
 void UartIsr(void)
 {
