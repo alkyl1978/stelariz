@@ -22,6 +22,7 @@
 #ifndef _PORT_H
 #define _PORT_H
 
+#include "inc/hw_memmap.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define	INLINE
@@ -53,7 +54,7 @@ typedef long    LONG;
 #define FALSE           0
 #endif
 
-#define modbuscomport    0
+#define MODBUS_UART_BASE UART0_BASE
 
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );

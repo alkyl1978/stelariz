@@ -308,6 +308,7 @@
           <state>D:\GIT\stelariz\modbus\include</state>
           <state>D:\GIT\stelariz\modbus\port</state>
           <state>D:\GIT\stelariz\modbus\rtu</state>
+          <state>D:\GIT\stelariz\libopencm3</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

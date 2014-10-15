@@ -32,12 +32,14 @@
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
 #include "inc/hw_timer.h"
+#include "inc/hw_uart.h"
 #include "inc/gpio.h"
 #include "inc/sysctl.h"
 #include "inc/interrupt.h"
 #include "inc/timer.h"
 #include "inc/rom.h"
 #include "inc/pin_map.h"
+#include "inc/uart.h"
 /* ----------------------- Static variables ---------------------------------*/
 UCHAR           ucGIEWasEnabled = FALSE;
 UCHAR           ucCriticalNesting = 0x00;
@@ -92,47 +94,60 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     }
     if( bInitialized )
     {
-        ENTER_CRITICAL_SECTION(  );
-        /* Reset USART */
-       
-        /* Initialize all UART registers */
-        
-        /* SSELx = 11 = SMCLK. Use only if PLL is synchronized ! */
-       
-        /* Configure USART0 Baudrate Registers. */
-       
-        /* Enable UART */
-        
-        /* Clear reset flag. */
-        
-
-        /* USART0 TXD/RXD */
-        
-
-        EXIT_CRITICAL_SECTION(  );
-
-      
+        ENTER_CRITICAL_SECTION();
+        GPIOPinConfigure(GPIO_PA0_U0RX);
+        GPIOPinConfigure(GPIO_PA1_U0TX);
+        ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+        ROM_UARTConfigSetExpClk(MODBUS_UART_BASE, ROM_SysCtlClockGet(), 115200,
+                              (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+                               UART_CONFIG_PAR_NONE));
+        ROM_IntEnable(INT_UART0);
+        ROM_UARTIntEnable(MODBUS_UART_BASE, UART_INT_TX | UART_INT_RX);
+        EXIT_CRITICAL_SECTION();     
+    }
+    else
+    {
+       GPIOPinConfigure(GPIO_PA0_U0RX);
+       GPIOPinConfigure(GPIO_PA1_U0TX);
+       ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+       ROM_UARTConfigSetExpClk(MODBUS_UART_BASE, ROM_SysCtlClockGet(), 115200,
+                              (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+                               UART_CONFIG_PAR_NONE));
+        ROM_IntEnable(INT_UART0);
+        ROM_UARTIntEnable(MODBUS_UART_BASE, UART_INT_TX | UART_INT_RX);
     }
     return bInitialized;
 }
 
 BOOL xMBPortSerialPutByte( CHAR ucByte )
 {
-    //TXBUF0 = ucByte;
+    ROM_UARTCharPutNonBlocking(MODBUS_UART_BASE,ucByte);
     return TRUE;
 }
 
 BOOL xMBPortSerialGetByte( CHAR * pucByte )
 {
-    //*pucByte = RXBUF0;
+    *pucByte = ROM_UARTCharGetNonBlocking(MODBUS_UART_BASE);
     return TRUE;
 }
 
 
 void prvvMBSerialIRQHandler( void )
 {
-    pxMBFrameCBByteReceived(  );
-    pxMBFrameCBTransmitterEmpty(  );
+    unsigned long ulStatus;    
+    ulStatus = ROM_UARTIntStatus(MODBUS_UART_BASE, true);
+    if(ulStatus&UART_INT_TX)
+    {
+      pxMBFrameCBTransmitterEmpty();
+    }
+    if(ulStatus&UART_INT_RX)
+    {
+      while(ROM_UARTCharsAvail(MODBUS_UART_BASE))
+      {
+        pxMBFrameCBByteReceived();
+      }
+    }    
+    ROM_UARTIntClear(MODBUS_UART_BASE, ulStatus);
 }
 
 
