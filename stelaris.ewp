@@ -1929,6 +1929,15 @@
         <name>$PROJ_DIR$\modbus\rtu\mbrtu.h</name>
       </file>
     </group>
+    <group>
+      <name>tcp</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\tcp\mbtcp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\tcp\mbtcp.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\modbus\mb.c</name>
     </file>

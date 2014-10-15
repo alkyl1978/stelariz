@@ -52,18 +52,22 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     if( xRxEnable )
     {
         // enable rx
+       HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_RXE;
     }
     else
     {
         // disable rx
+        HWREG(MODBUS_UART_BASE+UART_O_CTL)&=~UART_CTL_RXE;
     }
     if( xTxEnable )
     {
         // enable tx
+        HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_TXE;
     }
     else
     {
         // disable tx
+        HWREG(MODBUS_UART_BASE+UART_O_CTL)&=~UART_CTL_TXE;
     }
     EXIT_CRITICAL_SECTION(  );
 }

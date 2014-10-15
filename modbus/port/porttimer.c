@@ -59,7 +59,6 @@ xMBPortTimersInit( USHORT usTim1Timeout50us )
         //TACCR0 = ( USHORT ) ulReloadValue;
         /* Enable Timer A caputer compare interrupt. */
         //TACCTL0 = CCIE;
-
         bInitialized = TRUE;
     }
     return bInitialized;
