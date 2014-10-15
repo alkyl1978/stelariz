@@ -1887,9 +1887,6 @@
     <name>$PROJ_DIR$\main.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\modbus.c</name>
-  </file>
-  <file>
     <name>$PROJ_DIR$\servo.c</name>
   </file>
   <file>
