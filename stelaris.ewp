@@ -1877,6 +1877,30 @@
   <group>
     <name>modbus</name>
     <group>
+      <name>function</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfunccoils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncdiag.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncdisc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncholding.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncinput.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncother.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbutils.c</name>
+      </file>
+    </group>
+    <group>
       <name>inc</name>
       <file>
         <name>$PROJ_DIR$\modbus\include\mb.h</name>
@@ -1959,6 +1983,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\led.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\modbus_func.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\servo.c</name>

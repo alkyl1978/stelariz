@@ -21,7 +21,20 @@
 
 /* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
-
+//----------------------  sys includes ----------------------------------------
+#include "inc/hw_ints.h"
+#include "inc/hw_gpio.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_sysctl.h"
+#include "inc/hw_types.h"
+#include "inc/hw_timer.h"
+#include "inc/hw_uart.h"
+#include "inc/gpio.h"
+#include "inc/sysctl.h"
+#include "inc/interrupt.h"
+#include "inc/timer.h"
+#include "inc/rom.h"
+#include "inc/pin_map.h"
 /* ----------------------- Modbus includes ----------------------------------*/
 #include "mb.h"
 #include "mbport.h"
@@ -30,58 +43,35 @@
 /* Timer ticks are counted in multiples of 50us. Therefore 20000 ticks are
  * one second.
  */
-#define MB_TIMER_TICKS          ( 20000L )
-
-/* ----------------------- Static variables ---------------------------------*/
-static USHORT   usTimerOCRADelta;
-static USHORT   usTimerOCRBDelta;
-
 /* ----------------------- Start implementation -----------------------------*/
 BOOL
 xMBPortTimersInit( USHORT usTim1Timeout50us )
 {
     BOOL            bInitialized = FALSE;
-    ULONG           ulReloadValue = MB_TIMER_TICKS;
-
-    if( ulReloadValue <= 1 )
-    {
-        ulReloadValue = 1;
-    }
-    else
-    {
-        ulReloadValue -= 1;
-    }
-
-    if( ulReloadValue < 0xFFFE )
-    {
-        /* Timer A clock source is ACLK, Start disabled. */
-        //TACTL = TASSEL0;
-        //TACCR0 = ( USHORT ) ulReloadValue;
-        /* Enable Timer A caputer compare interrupt. */
-        //TACCTL0 = CCIE;
-        bInitialized = TRUE;
-    }
+    ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    ROM_TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
+    ROM_TimerLoadSet(TIMER0_BASE, TIMER_A, ROM_SysCtlClockGet()/10000);
+    ROM_IntEnable(INT_TIMER0A); 
+    ROM_TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);    
+    bInitialized = TRUE;
     return bInitialized;
 }
 
 void
 vMBPortTimersEnable( void )
 {
-    /* Reset timer counter and set compare interrupt. */
-    //TAR = 0;
-    //TACCTL0 |= CCIE;
-    //TACTL |= MC0;
+    ROM_TimerEnable(TIMER0_BASE, TIMER_A);
 }
 
 void
 vMBPortTimersDisable( void )
 {
-//    TACCTL0 &= ~CCIE;
-//    TACTL &= ~( MC0 | MC1 );
+   ROM_TimerDisable(TIMER0_BASE, TIMER_A);
 }
 
 
 void prvvMBTimerIRQHandler( void )
 {
-    (void)pxMBPortCBTimerExpired();
+    ROM_TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+    pxMBPortCBTimerExpired();
 }

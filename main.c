@@ -71,7 +71,6 @@ void SysTickIntHandler(void)
 //******************************************************************************************************
 int main()
 {
-  unsigned long lCommandStatus;
   ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
   ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
@@ -89,6 +88,7 @@ int main()
   Dvig_init();
   foto_init();
   eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
+  eMBEnable();
   ROM_IntMasterEnable();
   lcd_goto(0,0);
   lcd_puts("---------------"); 
@@ -101,7 +101,7 @@ int main()
   
    while(1)
   {
-  
+    eMBPoll();
   }
   return 0;
 }
