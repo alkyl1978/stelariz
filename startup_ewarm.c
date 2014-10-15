@@ -53,7 +53,6 @@ extern void SysTickIntHandler(void);
 extern void WTimer3AIsr(void);
 extern void WTimer3BIsr(void);
 extern void WTimer5AIsr(void);
-extern void UartIsr(void);
 
 
 
@@ -108,7 +107,7 @@ __root const uVectorEntry __vector_table[] @ ".intvec" =
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
-    UartIsr,                                // UART0 Rx and Tx
+    IntDefaultHandler,                      // UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
     IntDefaultHandler,                      // I2C0 Master and Slave

@@ -1868,30 +1868,39 @@
       <data/>
     </settings>
   </configuration>
-  <file>
-    <name>$PROJ_DIR$\dat_scor.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\dvig.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\foto.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\lcd.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\led.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\main.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\servo.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\startup_ewarm.c</name>
-  </file>
+  <group>
+    <name>modbus</name>
+  </group>
+  <group>
+    <name>src</name>
+    <file>
+      <name>$PROJ_DIR$\dat_scor.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\dvig.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\foto.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\lcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\led.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\servo.c</name>
+    </file>
+  </group>
+  <group>
+    <name>sys</name>
+    <file>
+      <name>$PROJ_DIR$\startup_ewarm.c</name>
+    </file>
+  </group>
 </project>
 
 
