@@ -34,7 +34,7 @@
 #ifdef __cplusplus
 PR_BEGIN_EXTERN_C
 #endif
-    eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, ULONG ulBaudRate,
+eMBErrorCode eMBRTUInit( UCHAR slaveAddress, UCHAR ucPort, ULONG ulBaudRate,
                              eMBParity eParity );
 void            eMBRTUStart( void );
 void            eMBRTUStop( void );

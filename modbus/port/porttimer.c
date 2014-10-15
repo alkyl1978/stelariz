@@ -41,7 +41,7 @@ BOOL
 xMBPortTimersInit( USHORT usTim1Timeout50us )
 {
     BOOL            bInitialized = FALSE;
-    ULONG           ulReloadValue = ( ACLK * ( ULONG )usTim1Timeout50us ) / MB_TIMER_TICKS;
+    ULONG           ulReloadValue = MB_TIMER_TICKS;
 
     if( ulReloadValue <= 1 )
     {
@@ -55,10 +55,10 @@ xMBPortTimersInit( USHORT usTim1Timeout50us )
     if( ulReloadValue < 0xFFFE )
     {
         /* Timer A clock source is ACLK, Start disabled. */
-        TACTL = TASSEL0;
-        TACCR0 = ( USHORT ) ulReloadValue;
+        //TACTL = TASSEL0;
+        //TACCR0 = ( USHORT ) ulReloadValue;
         /* Enable Timer A caputer compare interrupt. */
-        TACCTL0 = CCIE;
+        //TACCTL0 = CCIE;
 
         bInitialized = TRUE;
     }
@@ -69,24 +69,20 @@ void
 vMBPortTimersEnable( void )
 {
     /* Reset timer counter and set compare interrupt. */
-    TAR = 0;
-    TACCTL0 |= CCIE;
-    TACTL |= MC0;
+    //TAR = 0;
+    //TACCTL0 |= CCIE;
+    //TACTL |= MC0;
 }
 
 void
 vMBPortTimersDisable( void )
 {
-    TACCTL0 &= ~CCIE;
-    TACTL &= ~( MC0 | MC1 );
+//    TACCTL0 &= ~CCIE;
+//    TACTL &= ~( MC0 | MC1 );
 }
 
-#if defined (__GNUC__)
-interrupt (TIMERA0_VECTOR) prvvMBTimerIRQHandler( void )
-#else
-void
-prvvMBTimerIRQHandler( void ) __interrupt[TIMERA0_VECTOR]
-#endif
+
+void prvvMBTimerIRQHandler( void )
 {
     ( void )pxMBPortCBTimerExpired(  );
 }

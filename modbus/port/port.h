@@ -22,13 +22,6 @@
 #ifndef _PORT_H
 #define _PORT_H
 
-/* ----------------------- Platform includes --------------------------------*/
-
-#include <msp430x16x.h>
-#if defined (__GNUC__)
-#include <signal.h>
-#endif
-#undef CHAR
 
 /* ----------------------- Defines ------------------------------------------*/
 #define	INLINE
@@ -39,8 +32,6 @@
 #define EXIT_CRITICAL_SECTION( )    ExitCriticalSection( )
 #define assert( expr )
 
-#define SMCLK                       ( 4000000UL )
-#define ACLK                        ( 32768UL )
 
 typedef char    BOOL;
 

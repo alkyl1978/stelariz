@@ -303,7 +303,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>d:\GIT\stelariz</state>
+          <state>D:\GIT\stelariz\inc</state>
+          <state>D:\GIT\stelariz\modbus\include</state>
+          <state>D:\GIT\stelariz\modbus\port</state>
+          <state>D:\GIT\stelariz\modbus\rtu</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1870,6 +1874,63 @@
   </configuration>
   <group>
     <name>modbus</name>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbconfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbframe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbfunc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbport.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbproto.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbutils.h</name>
+      </file>
+    </group>
+    <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\port.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\portevent.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\portserial.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\porttimer.c</name>
+      </file>
+    </group>
+    <group>
+      <name>rtu</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbcrc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbcrc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbrtu.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbrtu.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\modbus\mb.c</name>
+    </file>
   </group>
   <group>
     <name>src</name>
