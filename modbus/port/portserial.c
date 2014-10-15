@@ -69,8 +69,7 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 BOOL
 xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-    BOOL            bInitialized = TRUE;
-   
+    BOOL            bInitialized = TRUE; 
     switch ( eParity )
     {
     case MB_PAR_NONE:
@@ -117,15 +116,13 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     return bInitialized;
 }
 
-BOOL
-xMBPortSerialPutByte( CHAR ucByte )
+BOOL xMBPortSerialPutByte( CHAR ucByte )
 {
     //TXBUF0 = ucByte;
     return TRUE;
 }
 
-BOOL
-xMBPortSerialGetByte( CHAR * pucByte )
+BOOL xMBPortSerialGetByte( CHAR * pucByte )
 {
     //*pucByte = RXBUF0;
     return TRUE;

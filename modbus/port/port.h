@@ -53,6 +53,8 @@ typedef long    LONG;
 #define FALSE           0
 #endif
 
+#define modbuscomport    0
+
 void            EnterCriticalSection( void );
 void            ExitCriticalSection( void );
 
