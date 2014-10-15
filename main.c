@@ -16,6 +16,7 @@
 #include "dat_scor.h"
 #include "lcd.h"
 #include "foto.h"
+#include "mb.h"
 //****************************************************************************************
 #define APP_INPUT_BUF_SIZE               128
 //****************************************************************************************
@@ -87,6 +88,7 @@ int main()
   lcd_init();
   Dvig_init();
   foto_init();
+  eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
   ROM_IntMasterEnable();
   lcd_goto(0,0);
   lcd_puts("---------------"); 

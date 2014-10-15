@@ -83,5 +83,5 @@ vMBPortTimersDisable( void )
 
 void prvvMBTimerIRQHandler( void )
 {
-    ( void )pxMBPortCBTimerExpired(  );
+    (void)pxMBPortCBTimerExpired();
 }

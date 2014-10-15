@@ -309,6 +309,7 @@
           <state>D:\GIT\stelariz\modbus\port</state>
           <state>D:\GIT\stelariz\modbus\rtu</state>
           <state>D:\GIT\stelariz\libopencm3</state>
+          <state>D:\GIT\stelariz\modbus\tcp</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1960,9 +1961,6 @@
       <name>$PROJ_DIR$\led.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\main.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\servo.c</name>
     </file>
   </group>
@@ -1972,6 +1970,9 @@
       <name>$PROJ_DIR$\startup_ewarm.c</name>
     </file>
   </group>
+  <file>
+    <name>$PROJ_DIR$\main.c</name>
+  </file>
 </project>
 
 
