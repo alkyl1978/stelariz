@@ -48,27 +48,33 @@ UCHAR           ucCriticalNesting = 0x00;
 void
 vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 {
+    unsigned long enb=0;
     ENTER_CRITICAL_SECTION();
     if( xRxEnable )
     {
         // enable rx
-       HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_RXE;
+       HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_RXE|UART_CTL_UARTEN;
+       enb|=UART_INT_RX;
     }
     else
     {
         // disable rx
         HWREG(MODBUS_UART_BASE+UART_O_CTL)&=~UART_CTL_RXE;
+        enb&=~UART_INT_RX;
     }
     if( xTxEnable )
     {
         // enable tx
-        HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_TXE;
+        HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_TXE|UART_CTL_UARTEN;
+        enb|=UART_INT_TX;
     }
     else
     {
         // disable tx
         HWREG(MODBUS_UART_BASE+UART_O_CTL)&=~UART_CTL_TXE;
+        enb&=~UART_INT_TX;
     }
+    ROM_UARTIntEnable(MODBUS_UART_BASE, enb);
     EXIT_CRITICAL_SECTION(  );
 }
 
@@ -76,22 +82,30 @@ BOOL
 xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     BOOL            bInitialized = TRUE; 
+    unsigned long ulDiv,ulUARTClk,ulConfig;
+    ulUARTClk=ROM_SysCtlClockGet();
+    ulConfig=UART_CONFIG_STOP_ONE;
     switch ( eParity )
     {
     case MB_PAR_NONE:
+        ulConfig|=UART_CONFIG_PAR_NONE;
         break;
     case MB_PAR_ODD:
         // set party
+      ulConfig|=UART_CONFIG_PAR_ODD;
         break;
     case MB_PAR_EVEN:
         // set party
+      ulConfig|=UART_CONFIG_PAR_EVEN;
         break;
     }
     switch ( ucDataBits )
     {
     case 8:
+        ulConfig|=UART_CONFIG_WLEN_8;
         break;
     case 7:
+        ulConfig|=UART_CONFIG_WLEN_7;
         break;
     default:
         bInitialized = FALSE;
@@ -102,30 +116,55 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         ROM_GPIOPinConfigure(GPIO_PA0_U0RX);
         ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
         ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-        ROM_UARTConfigSetExpClk(MODBUS_UART_BASE, ROM_SysCtlClockGet(), 115200,
-                              (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-                               UART_CONFIG_PAR_NONE));
-        ROM_IntEnable(INT_UART0);
-        ROM_UARTIntEnable(MODBUS_UART_BASE, UART_INT_TX | UART_INT_RX);
-        EXIT_CRITICAL_SECTION();     
+        while(HWREG(MODBUS_UART_BASE + UART_O_FR) & UART_FR_BUSY){};
+        HWREG(MODBUS_UART_BASE + UART_O_LCRH) &= ~(UART_LCRH_FEN);
+        HWREG(MODBUS_UART_BASE + UART_O_CTL) &= ~UART_CTL_UARTEN;
+        if((ulBaudRate * 16) > ulUARTClk)
+        {
+          //
+          // Enable high speed mode.
+          //
+          HWREG(MODBUS_UART_BASE + UART_O_CTL) |= UART_CTL_HSE;
+          //
+          // Half the supplied baud rate to compensate for enabling high speed
+          // mode.  This allows the following code to be common to both cases.
+          //
+          ulBaudRate /= 2;
+         }
+        else
+          {
+            //
+            // Disable high speed mode.
+            //
+            HWREG(MODBUS_UART_BASE + UART_O_CTL) &= ~(UART_CTL_HSE);
+          }
+          //
+          // Compute the fractional baud rate divider.
+          //
+          ulDiv = (((ulUARTClk * 8) / ulBaudRate) + 1) / 2;
+          HWREG(MODBUS_UART_BASE + UART_O_IBRD) = ulDiv / 64;
+          HWREG(MODBUS_UART_BASE + UART_O_FBRD) = ulDiv % 64;
+          //
+          // Clear the flags register.
+          //
+          HWREG(MODBUS_UART_BASE + UART_O_FR) = 0;
+          HWREG(MODBUS_UART_BASE + UART_O_LCRH) = ulConfig;
+          HWREG(MODBUS_UART_BASE + UART_O_LCRH) |= UART_LCRH_FEN;
+          HWREG(MODBUS_UART_BASE + UART_O_CTL) |= (UART_CTL_UARTEN );
+          ROM_IntEnable(INT_UART0);
+          ROM_UARTIntEnable(MODBUS_UART_BASE, UART_INT_TX | UART_INT_RX);
+          EXIT_CRITICAL_SECTION();     
     }
     else
     {
-       ROM_GPIOPinConfigure(GPIO_PA0_U0RX);
-       ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
-       ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-       ROM_UARTConfigSetExpClk(MODBUS_UART_BASE, ROM_SysCtlClockGet(), 115200,
-                              (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-                               UART_CONFIG_PAR_NONE));
-        ROM_IntEnable(INT_UART0);
-        ROM_UARTIntEnable(MODBUS_UART_BASE, UART_INT_TX | UART_INT_RX);
+      
     }
     return bInitialized;
 }
 
 BOOL xMBPortSerialPutByte( CHAR ucByte )
 {
-    ROM_UARTCharPutNonBlocking(MODBUS_UART_BASE,ucByte);
+    HWREG(MODBUS_UART_BASE + UART_O_DR) = ucByte;
     return TRUE;
 }
 
@@ -140,6 +179,7 @@ void prvvMBSerialIRQHandler( void )
 {
     unsigned long ulStatus;    
     ulStatus = ROM_UARTIntStatus(MODBUS_UART_BASE, true);
+    ROM_UARTIntClear(MODBUS_UART_BASE, ulStatus);
     if(ulStatus&UART_INT_TX)
     {
       pxMBFrameCBTransmitterEmpty();
@@ -150,8 +190,7 @@ void prvvMBSerialIRQHandler( void )
       {
         pxMBFrameCBByteReceived();
       }
-    }    
-    ROM_UARTIntClear(MODBUS_UART_BASE, ulStatus);
+    }      
 }
 
 
