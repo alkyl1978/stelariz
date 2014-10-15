@@ -322,7 +322,7 @@ xMBRTUTransmitFSM( void )
 BOOL
 xMBRTUTimerT35Expired( void )
 {
-    BOOL            xNeedPoll = FALSE;
+    BOOL   xNeedPoll = FALSE;
 
     switch ( eRcvState )
     {
