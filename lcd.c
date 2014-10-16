@@ -19,7 +19,7 @@
 void lcd_temizle(void)
 {  
   lcd_komut(0x01);
-  ROM_SysCtlDelay(ROM_SysCtlClockGet()/100); // 10ms
+  ROM_SysCtlDelay(ROM_SysCtlClockGet()/300); // 10ms
 }
 
 
@@ -43,6 +43,7 @@ void lcd_init(void)
 void lcd_komut(unsigned char c)
 {
   LCD_RS(0);  
+  ROM_SysCtlDelay(ROM_SysCtlClockGet()/1500); // 2ms
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,(c & 0xF0));
   LCD_EN(1);
@@ -56,7 +57,8 @@ void lcd_komut(unsigned char c)
 
 void lcd_putch(char c)
 {
-  LCD_RS(1);       
+  LCD_RS(1);  
+  ROM_SysCtlDelay(ROM_SysCtlClockGet()/1500); // 2ms
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,(c & 0xF0));
   EN_ACKAPA();
