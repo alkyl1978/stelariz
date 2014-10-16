@@ -46,13 +46,10 @@ void lcd_komut(unsigned char c)
   ROM_SysCtlDelay(ROM_SysCtlClockGet()/1500); // 2ms
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,(c & 0xF0));
-  LCD_EN(1);
-  LCD_EN(0);
   EN_ACKAPA();
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,((c & 0x0F)<<4));
-  LCD_EN(1);
-  LCD_EN(0); 
+  EN_ACKAPA();
 }
 
 void lcd_putch(char c)

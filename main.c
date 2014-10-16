@@ -85,10 +85,7 @@ int main()
   led_init();
   lcd_init();
   Dvig_init();
-  foto_init();
-  eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
-  eMBEnable();
-  ROM_IntMasterEnable();
+  foto_init(); 
   lcd_goto(0,0);
   lcd_puts("---------------"); 
   lcd_goto(1,0);
@@ -97,7 +94,9 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
-  
+  eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
+  eMBEnable();
+  ROM_IntMasterEnable();
    while(1)
   {
     eMBPoll();

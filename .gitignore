@@ -3,4 +3,5 @@
 *.dep
 *.tmp
 /.settings/
+/Release/
 *.log
