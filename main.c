@@ -18,7 +18,7 @@
 #include "foto.h"
 #include "mb.h"
 //****************************************************************************************
-#define APP_INPUT_BUF_SIZE               128
+
 //****************************************************************************************
 //
 //
@@ -36,7 +36,6 @@ volatile unsigned long serv_Y_Angle=90;
 volatile unsigned long serv_Z_Angle=80;
 
 volatile unsigned long dvig_napr[1];
-volatile unsigned char g_cInput[APP_INPUT_BUF_SIZE];
 //****************************************************************************************
 //
 //

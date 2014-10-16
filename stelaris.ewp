@@ -970,7 +970,7 @@
         <option>
           <name>Variant</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -1001,11 +1001,11 @@
         <option>
           <name>FPU</name>
           <version>2</version>
-          <state>0</state>
+          <state>5</state>
         </option>
         <option>
           <name>OGCoreOrChip</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -1027,7 +1027,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.30.1.53141</state>
+          <state>6.70.2.6303</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1039,7 +1039,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>default	None</state>
+          <state>LM4F120H5QR	TexasInstruments LM4F120H5QR</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1047,7 +1047,7 @@
         </option>
         <option>
           <name>GEndianModeBE</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
@@ -1078,12 +1078,12 @@
         <option>
           <name>GFPUCoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -1113,6 +1113,8 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
+          <state>TARGET_IS_BLIZZARD_RA2</state>
+          <state>PART_LM4F120H5QR</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1241,7 +1243,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>D:\GIT\stelariz\modbus\include</state>
+          <state>D:\GIT\stelariz\modbus\tcp</state>
+          <state>D:\GIT\stelariz\modbus\rtu</state>
+          <state>D:\GIT\stelariz\modbus\port</state>
+          <state>D:\GIT\stelariz\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1702,7 +1708,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
