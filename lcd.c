@@ -19,7 +19,7 @@
 void lcd_temizle(void)
 {  
   lcd_komut(0x01);
-  ROM_SysCtlDelay(ROM_SysCtlClockGet()/300); // 10ms
+  ROM_SysCtlDelay(ROM_SysCtlClockGet()/100); // 10ms
 }
 
 
@@ -32,10 +32,10 @@ void lcd_init(void)
   LCD_RS(0);
   LCD_EN(0);
   lcd_komut(0x28);  // 4 Bit , �ift Sat�r LCD
-  lcd_komut(0x0C);  // �mle� Gizleniyor
-  lcd_komut(0x06);  // Sa�a do�ru yazma aktif
+  lcd_komut(0x0C);  // �mle� Gizleniyor 
+  lcd_komut(0x06);  // Sa�a do�ru yazma aktif 
   lcd_komut(0x80);  // LCD Birinci Sat�r Konumunda
-  lcd_komut(0x28);  // 4 Bit , �ift Sat�r LCD
+  lcd_komut(0x28);  // 4 Bit , �ift Sat�r LCD 
   lcd_temizle();
 
 }
@@ -43,19 +43,20 @@ void lcd_init(void)
 void lcd_komut(unsigned char c)
 {
   LCD_RS(0);  
-  ROM_SysCtlDelay(ROM_SysCtlClockGet()/1500); // 2ms
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,(c & 0xF0));
+  LCD_EN(1);
+  LCD_EN(0);
   EN_ACKAPA();
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,((c & 0x0F)<<4));
-  EN_ACKAPA(); 
+  LCD_EN(1);
+  LCD_EN(0); 
 }
 
 void lcd_putch(char c)
 {
   LCD_RS(1);       
-  ROM_SysCtlDelay(ROM_SysCtlClockGet()/1500); // 2ms
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,0);
   ROM_GPIOPinWrite(GPIO_PORTA_BASE,0xF0,(c & 0xF0));
   EN_ACKAPA();
