@@ -49,31 +49,33 @@ void
 vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 {
     unsigned long enb=0;
+    unsigned long flag=0;
     ENTER_CRITICAL_SECTION();
     if( xRxEnable )
     {
         // enable rx
-       HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_RXE|UART_CTL_UARTEN;
+       flag|=UART_CTL_RXE|UART_CTL_UARTEN;
        enb|=UART_INT_RX;
     }
     else
     {
         // disable rx
-        HWREG(MODBUS_UART_BASE+UART_O_CTL)&=~UART_CTL_RXE;
+        flag&=~UART_CTL_RXE;
         enb&=~UART_INT_RX;
     }
     if( xTxEnable )
     {
         // enable tx
-        HWREG(MODBUS_UART_BASE+UART_O_CTL)|=UART_CTL_TXE|UART_CTL_UARTEN;
+        flag|=UART_CTL_TXE|UART_CTL_UARTEN;
         enb|=UART_INT_TX;
     }
     else
     {
         // disable tx
-        HWREG(MODBUS_UART_BASE+UART_O_CTL)&=~UART_CTL_TXE;
+        flag&=~UART_CTL_TXE;
         enb&=~UART_INT_TX;
     }
+    HWREG(MODBUS_UART_BASE+UART_O_CTL)=flag;
     ROM_UARTIntEnable(MODBUS_UART_BASE, enb);
     EXIT_CRITICAL_SECTION(  );
 }
