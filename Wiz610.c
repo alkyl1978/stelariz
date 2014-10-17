@@ -24,8 +24,27 @@ void wiz610_init(void)
    ROM_GPIOPinConfigure(GPIO_PB0_U1RX);
    ROM_GPIOPinConfigure(GPIO_PB1_U1TX);
    ROM_GPIOPinTypeUART(WIZ610_GPIO_BASE, WIZ610_GPIO_PIN_RX | WIZ610_GPIO_PIN_RX);
-   ROM_UARTConfigSetExpClk(WIZ610_UART_BASE, ROM_SysCtlClockGet(), 115200,
+   ROM_UARTConfigSetExpClk(WIZ610_UART_BASE, ROM_SysCtlClockGet(), 38400,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
-   ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,0);   
+   ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,0); 
+   ROM_UARTEnable(WIZ610_GPIO_BASE);
+   ROM_IntEnable(INT_UART0);
+   ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX | UART_INT_TX);
+}
+
+void wiz610_uart_isr(void)
+{
+  unsigned long ulStatus;
+
+    //
+    // Get the interrrupt status.
+    //
+    ulStatus = ROM_UARTIntStatus(WIZ610_UART_BASE, true);
+    //
+    // Clear the asserted interrupts.
+    //
+    ROM_UARTIntClear(WIZ610_UART_BASE, ulStatus);
+
+
 }
