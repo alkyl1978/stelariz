@@ -53,6 +53,8 @@ extern void SysTickIntHandler(void);
 extern void WTimer3AIsr(void);
 extern void WTimer3BIsr(void);
 extern void WTimer5AIsr(void);
+extern void prvvMBSerialIRQHandler(void);
+extern void prvvMBTimerIRQHandler(void);
 
 
 
@@ -107,7 +109,7 @@ __root const uVectorEntry __vector_table[] @ ".intvec" =
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
-    IntDefaultHandler,                      // UART0 Rx and Tx
+    prvvMBSerialIRQHandler,                      // UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
     IntDefaultHandler,                      // I2C0 Master and Slave
@@ -121,11 +123,11 @@ __root const uVectorEntry __vector_table[] @ ".intvec" =
     IntDefaultHandler,                      // ADC Sequence 2
     IntDefaultHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
-    IntDefaultHandler,                       // Timer 0 subtimer A
-    IntDefaultHandler,                      // Timer 0 subtimer B
+    IntDefaultHandler,                      // Timer 0 subtimer A
+    IntDefaultHandler,                       // Timer 0 subtimer B
     IntDefaultHandler,                       // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B
-    IntDefaultHandler,                      // Timer 2 subtimer A
+    prvvMBTimerIRQHandler,                      // Timer 2 subtimer A
     IntDefaultHandler,                      // Timer 2 subtimer B
     IntDefaultHandler,                      // Analog Comparator 0
     IntDefaultHandler,                      // Analog Comparator 1

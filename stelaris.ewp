@@ -303,7 +303,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>d:\GIT\stelariz</state>
+          <state>D:\GIT\stelariz\inc</state>
+          <state>D:\GIT\stelariz\modbus\include</state>
+          <state>D:\GIT\stelariz\modbus\port</state>
+          <state>D:\GIT\stelariz\modbus\rtu</state>
+          <state>D:\GIT\stelariz\libopencm3</state>
+          <state>D:\GIT\stelariz\modbus\tcp</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -964,7 +970,7 @@
         <option>
           <name>Variant</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -995,11 +1001,11 @@
         <option>
           <name>FPU</name>
           <version>2</version>
-          <state>0</state>
+          <state>5</state>
         </option>
         <option>
           <name>OGCoreOrChip</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -1021,7 +1027,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.30.1.53141</state>
+          <state>6.70.2.6303</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -1033,7 +1039,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>default	None</state>
+          <state>LM4F120H5QR	TexasInstruments LM4F120H5QR</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1041,7 +1047,7 @@
         </option>
         <option>
           <name>GEndianModeBE</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
@@ -1072,12 +1078,12 @@
         <option>
           <name>GFPUCoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -1107,6 +1113,8 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
+          <state>TARGET_IS_BLIZZARD_RA2</state>
+          <state>PART_LM4F120H5QR</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1235,7 +1243,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>D:\GIT\stelariz\modbus\include</state>
+          <state>D:\GIT\stelariz\modbus\tcp</state>
+          <state>D:\GIT\stelariz\modbus\rtu</state>
+          <state>D:\GIT\stelariz\modbus\port</state>
+          <state>D:\GIT\stelariz\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1696,7 +1708,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1868,29 +1880,131 @@
       <data/>
     </settings>
   </configuration>
-  <file>
-    <name>$PROJ_DIR$\dat_scor.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\dvig.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\foto.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\lcd.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\led.c</name>
-  </file>
+  <group>
+    <name>modbus</name>
+    <group>
+      <name>function</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfunccoils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncdiag.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncdisc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncholding.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncinput.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbfuncother.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\functions\mbutils.c</name>
+      </file>
+    </group>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbconfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbframe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbfunc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbport.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbproto.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\include\mbutils.h</name>
+      </file>
+    </group>
+    <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\port.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\portevent.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\portserial.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\port\porttimer.c</name>
+      </file>
+    </group>
+    <group>
+      <name>rtu</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbcrc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbcrc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbrtu.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\rtu\mbrtu.h</name>
+      </file>
+    </group>
+    <group>
+      <name>tcp</name>
+      <file>
+        <name>$PROJ_DIR$\modbus\tcp\mbtcp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modbus\tcp\mbtcp.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\modbus\mb.c</name>
+    </file>
+  </group>
+  <group>
+    <name>src</name>
+    <file>
+      <name>$PROJ_DIR$\dat_scor.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\dvig.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\foto.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\lcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\led.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\modbus_func.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\servo.c</name>
+    </file>
+  </group>
+  <group>
+    <name>sys</name>
+    <file>
+      <name>$PROJ_DIR$\startup_ewarm.c</name>
+    </file>
+  </group>
   <file>
     <name>$PROJ_DIR$\main.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\servo.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\startup_ewarm.c</name>
   </file>
 </project>
 

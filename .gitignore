@@ -1,4 +1,8 @@
 /settings/
 /Debug/
+/settings/
+*.dep
 *.tmp
+/.settings/
 /Release/
+*.log

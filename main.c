@@ -1,21 +1,23 @@
-#include "lm4f/inc/hw_ints.h"
-#include "lm4f/inc/hw_gpio.h"
-#include "lm4f/inc/hw_memmap.h"
-#include "lm4f/inc/hw_sysctl.h"
-#include "lm4f/inc/hw_types.h"
-#include "lm4f/inc/hw_timer.h"
-#include "lm4f/driverlib/gpio.h"
-#include "lm4f/driverlib/sysctl.h"
-#include "lm4f/driverlib/interrupt.h"
-#include "lm4f/driverlib/timer.h"
-#include "lm4f/driverlib/rom.h"
-#include "lm4f/driverlib/pin_map.h"
+#include "inc/hw_ints.h"
+#include "inc/hw_gpio.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_sysctl.h"
+#include "inc/hw_types.h"
+#include "inc/hw_timer.h"
+#include "inc/gpio.h"
+#include "inc/sysctl.h"
+#include "inc/interrupt.h"
+#include "inc/timer.h"
+#include "inc/rom.h"
+#include "inc/pin_map.h"
 #include "servo.h"
 #include "led.h"
 #include "dvig.h"
 #include "dat_scor.h"
 #include "lcd.h"
 #include "foto.h"
+#include "mb.h"
+//****************************************************************************************
 
 //****************************************************************************************
 //
@@ -68,7 +70,6 @@ void SysTickIntHandler(void)
 //******************************************************************************************************
 int main()
 {
-  unsigned long lCommandStatus;
   ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
   ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
@@ -84,8 +85,7 @@ int main()
   led_init();
   lcd_init();
   Dvig_init();
-  foto_init();
-  ROM_IntMasterEnable();
+  foto_init(); 
   lcd_goto(0,0);
   lcd_puts("---------------"); 
   lcd_goto(1,0);
@@ -94,9 +94,12 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
-  
+  eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
+  eMBEnable();
+  ROM_IntMasterEnable();
    while(1)
   {
-    
+    eMBPoll();
   }
+  return 0;
 }
