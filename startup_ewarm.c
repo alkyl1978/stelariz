@@ -55,6 +55,8 @@ extern void WTimer3BIsr(void);
 extern void WTimer5AIsr(void);
 extern void prvvMBSerialIRQHandler(void);
 extern void prvvMBTimerIRQHandler(void);
+extern void uDMAIntHandler(void);
+extern void uDMAErrorHandler(void);
 
 
 
@@ -150,8 +152,8 @@ __root const uVectorEntry __vector_table[] @ ".intvec" =
     IntDefaultHandler,                      // Hibernate
     IntDefaultHandler,                      // USB0
     IntDefaultHandler,                      // PWM Generator 3
-    IntDefaultHandler,                      // uDMA Software Transfer
-    IntDefaultHandler,                      // uDMA Error
+    uDMAIntHandler,                         // uDMA Software Transfer
+    uDMAErrorHandler,                       // uDMA Error
     IntDefaultHandler,                      // ADC1 Sequence 0
     IntDefaultHandler,                      // ADC1 Sequence 1
     IntDefaultHandler,                      // ADC1 Sequence 2
