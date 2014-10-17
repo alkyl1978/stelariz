@@ -301,7 +301,7 @@ xMBRTUTransmitFSM( void )
         /* check if we are finished. */
         if( usSndBufferCount != 0 )
         {
-            xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
+            xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur);
             pucSndBufferCur++;  /* next byte in sendbuffer. */
             usSndBufferCount--;
         }
