@@ -4,7 +4,6 @@
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
 #include "inc/hw_timer.h"
-#include "inc/hw_uart.h"
 #include "inc/gpio.h"
 #include "inc/sysctl.h"
 #include "inc/interrupt.h"
@@ -19,6 +18,7 @@ void wiz610_init(void)
   ROM_SysCtlPeripheralEnable(WIZ610_GPIO_PERIPH);
   ROM_GPIODirModeSet(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE ,GPIO_DIR_MODE_OUT);
   ROM_GPIOPadConfigSet(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,GPIO_STRENGTH_8MA,GPIO_PIN_TYPE_STD_WPU);
+  ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,WIZ610_GPIO_PIN_CMD_ENABLE);
   // uart setup 
    ROM_SysCtlPeripheralEnable(WIZ610_UART_PERIPH);
    ROM_GPIOPinConfigure(GPIO_PB0_U1RX);
@@ -28,6 +28,7 @@ void wiz610_init(void)
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
    ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,0); 
+   ROM_UARTEnable(WIZ610_GPIO_BASE);
    ROM_IntEnable(INT_UART1);
    ROM_UARTEnable(WIZ610_UART_BASE);
    ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX | UART_INT_TX);

@@ -111,7 +111,7 @@ __root const uVectorEntry __vector_table[] @ ".intvec" =
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
-    prvvMBSerialIRQHandler ,                // UART0 Rx and Tx
+    prvvMBSerialIRQHandler ,                 // UART0 Rx and Tx
     wiz610_uart_isr,                        // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
     IntDefaultHandler,                      // I2C0 Master and Slave
