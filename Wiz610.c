@@ -10,3 +10,9 @@
 #include "inc/timer.h"
 #include "inc/rom.h"
 #include "inc/pin_map.h"
+#include "wiz610.h"
+
+void wiz610_init(void)
+{
+  
+}
