@@ -62,20 +62,6 @@ void SysTickIntHandler(void)
 {
 
 }
-
-void UARTSend(const unsigned char *pucBuffer, unsigned long ulCount)
-{
-    //
-    // Loop while there are more characters to send.
-    //
-    while(ulCount--)
-    {
-        //
-        // Write the next character to the UART.
-        //
-        ROM_UARTCharPutNonBlocking(UART0_BASE, *pucBuffer++);
-    }
-}
 //******************************************************************************************************
 //
 //
@@ -115,7 +101,6 @@ int main()
   ROM_IntMasterEnable();
    while(1)
   {
-    UARTSend("<QZ>",4);
     eMBPoll();
   }
   return 0;
