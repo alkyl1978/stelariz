@@ -29,8 +29,8 @@ void wiz610_init(void)
                              UART_CONFIG_PAR_NONE));
    ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,0); 
    ROM_UARTEnable(WIZ610_GPIO_BASE);
-   ROM_IntEnable(INT_UART0);
-   ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX | UART_INT_TX);
+   ROM_IntEnable(INT_UART1);
+   ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX | UART_INT_RT);
 }
 
 void wiz610_uart_isr(void)
