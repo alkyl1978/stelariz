@@ -17,6 +17,7 @@
 #include "lcd.h"
 #include "foto.h"
 #include "mb.h"
+#include "wiz610.h"
 //****************************************************************************************
 
 //****************************************************************************************
@@ -96,10 +97,11 @@ int main()
   lcd_puts("---------------"); 
   eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
   eMBEnable();
+  wiz610_init();
   ROM_IntMasterEnable();
    while(1)
   {
-    eMBPoll();
+  //  eMBPoll();
   }
   return 0;
 }

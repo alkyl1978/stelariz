@@ -1999,6 +1999,9 @@
     <file>
       <name>$PROJ_DIR$\servo.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\Wiz610.c</name>
+    </file>
   </group>
   <group>
     <name>sys</name>
