@@ -22,4 +22,5 @@ typedef enum
 void wiz610_init(void);
 void wiz_start(void);
 unsigned long wizInPrin(void);
+void wiz_put_str(unsigned char *buf);
 #endif

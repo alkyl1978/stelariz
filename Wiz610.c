@@ -92,3 +92,7 @@ unsigned long wizInPrin(void)
 	return wiz_r;
 }
 
+void wiz_put_str(unsigned char *buf)
+{
+	while(*buf!=0) ROM_UARTCharPutNonBlocking(WIZ610_UART_BASE,*buf++);
+}

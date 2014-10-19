@@ -102,6 +102,8 @@ int main()
   wiz_start();
    while(1)
   {
+	wiz_put_str("<QZ>");
+	while(wizInPrin()!=WIZ_STOP);
 	if(wizInPrin()==WIZ_STOP)
 	{
 
