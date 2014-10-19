@@ -13,6 +13,11 @@
 #include "driverlib/uart.h"
 #include "include/wiz610.h"
 
+const unsigned char str[]="<QZ>";
+volatile unsigned long wiz_r=WIZ_START;
+volatile unsigned char buf_pr[32];
+volatile unsigned char *yk_buf;
+
 void wiz610_init(void)
 {
   ROM_SysCtlPeripheralEnable(WIZ610_GPIO_PERIPH);
@@ -37,6 +42,7 @@ void wiz610_init(void)
 void wiz610_uart_isr(void)
 {
   unsigned long ulStatus;
+  unsigned char data;
 
     //
     // Get the interrrupt status.
@@ -46,6 +52,43 @@ void wiz610_uart_isr(void)
     // Clear the asserted interrupts.
     //
     ROM_UARTIntClear(WIZ610_UART_BASE, ulStatus);
+    if (ulStatus==UART_INT_RX)
+	{
+    	while(ROM_UARTCharsAvail(WIZ610_UART_BASE))
+    	{
+    		data=ROM_UARTCharGetNonBlocking(WIZ610_UART_BASE);
+    		switch (wiz_r)
+			{
+    		case WIZ_START:
+    		{
+    			if (data==wiz_char_start)
+    			{
+    				yk_buf=&buf_pr[0];
+    				wiz_r=WIZ_RESV;
+    			}
+    			break;
+    		}
+    		case WIZ_RESV:
+    		{
+    		    if(data==wiz_char_stop)
+    		    {
+    		    	wiz_r=WIZ_STOP;
+    		    }
+    		    else *yk_buf++=data;
+    			break;
+    		}
+			}
+			}
+    	}
+	}
 
-
+void wiz_start(void)
+{
+	wiz_r=WIZ_START;
 }
+
+unsigned long wizInPrin(void)
+{
+	return wiz_r;
+}
+

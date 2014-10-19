@@ -99,8 +99,13 @@ int main()
   eMBEnable();
   wiz610_init();
   ROM_IntMasterEnable();
+  wiz_start();
    while(1)
   {
+	if(wizInPrin()==WIZ_STOP)
+	{
+
+	}
     eMBPoll();
   }
   return 0;
