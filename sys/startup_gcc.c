@@ -47,6 +47,11 @@ extern void WTimer3BIsr(void);
 extern void SysTickIntHandler(void);
 extern void uDMAIntHandler(void);
 extern void uDMAErrorHandler(void);
+//************************** modbus********************************************
+extern void prvvMBSerialIRQHandler( void );
+extern void prvvMBTimerIRQHandler( void );
+//***************************WIZ610********************************************
+extern void wiz610_uart_isr(void);
 //*****************************************************************************
 //
 // Reserve space for the system stack.
@@ -85,7 +90,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
-    IntDefaultHandler,                      // UART0 Rx and Tx
+	prvvMBSerialIRQHandler,                      // UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
     IntDefaultHandler,                      // I2C0 Master and Slave
@@ -103,7 +108,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B
-    IntDefaultHandler,                      // Timer 2 subtimer A
+	prvvMBTimerIRQHandler,                      // Timer 2 subtimer A
     IntDefaultHandler,                      // Timer 2 subtimer B
     IntDefaultHandler,                      // Analog Comparator 0
     IntDefaultHandler,                      // Analog Comparator 1
@@ -113,7 +118,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port F
     IntDefaultHandler,                      // GPIO Port G
     IntDefaultHandler,                      // GPIO Port H
-    IntDefaultHandler,                      // UART2 Rx and Tx
+	wiz610_uart_isr,                      // UART2 Rx and Tx
     IntDefaultHandler,                      // SSI1 Rx and Tx
     IntDefaultHandler,                      // Timer 3 subtimer A
     IntDefaultHandler,                      // Timer 3 subtimer B
@@ -126,8 +131,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Hibernate
     IntDefaultHandler,                      // USB0
     IntDefaultHandler,                      // PWM Generator 3
-	uDMAIntHandler,                      // uDMA Software Transfer
-	uDMAErrorHandler,                      // uDMA Error
+	uDMAIntHandler,                         // uDMA Software Transfer
+	uDMAErrorHandler,                       // uDMA Error
     IntDefaultHandler,                      // ADC1 Sequence 0
     IntDefaultHandler,                      // ADC1 Sequence 1
     IntDefaultHandler,                      // ADC1 Sequence 2
