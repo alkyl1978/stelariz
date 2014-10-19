@@ -1,24 +1,3 @@
-/*
- * FreeModbus Libary: MSP430 Port
- * Copyright (C) 2006 Christian Walter <wolti@sil.at>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * File: $Id: portserial.c,v 1.3 2006/11/19 03:57:49 wolti Exp $
- */
-
 /* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
 
@@ -118,7 +97,6 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         ROM_GPIOPinConfigure(GPIO_PA0_U0RX);
         ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
         ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-        while(HWREG(MODBUS_UART_BASE + UART_O_FR) & UART_FR_BUSY){};
         HWREG(MODBUS_UART_BASE + UART_O_LCRH) &= ~(UART_LCRH_FEN);
         HWREG(MODBUS_UART_BASE + UART_O_CTL) &= ~UART_CTL_UARTEN;
         if((ulBaudRate * 16) > ulUARTClk)
