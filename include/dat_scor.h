@@ -23,5 +23,8 @@
 #define CCP_B_TIMER_BASE          WTIMER3_BASE
 
 void DatSkor_init(void);
+void WTimer3AIsr(void);
+void WTimer3BIsr(void);
+
 
 #endif

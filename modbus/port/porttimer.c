@@ -22,22 +22,23 @@
 /* ----------------------- Platform includes --------------------------------*/
 #include "port.h"
 //----------------------  sys includes ----------------------------------------
-#include "hw_ints.h"
-#include "hw_gpio.h"
-#include "hw_memmap.h"
-#include "hw_sysctl.h"
-#include "hw_types.h"
-#include "hw_timer.h"
-#include "hw_uart.h"
-#include "gpio.h"
-#include "sysctl.h"
-#include "interrupt.h"
-#include "timer.h"
-#include "rom.h"
-#include "pin_map.h"
+#include "../../inc/hw_ints.h"
+#include "../../inc/hw_gpio.h"
+#include "../../inc/hw_memmap.h"
+#include "../../inc/hw_sysctl.h"
+#include "../../inc/hw_types.h"
+#include "../../inc/hw_timer.h"
+#include "../../inc/hw_uart.h"
+#include "../../driverlib/gpio.h"
+#include "../../driverlib/sysctl.h"
+#include "../../driverlib/interrupt.h"
+#include "../../driverlib/timer.h"
+#include "../../driverlib/rom.h"
+#include "../../driverlib/pin_map.h"
+#include "../../driverlib/uart.h"
 /* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
-#include "mbport.h"
+#include "../include/mb.h"
+#include "../include/mbport.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 /* Timer ticks are counted in multiples of 50us. Therefore 20000 ticks are

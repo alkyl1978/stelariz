@@ -33,15 +33,15 @@
 #include "string.h"
 
 /* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
+#include "../port/port.h"
 
 /* ----------------------- Modbus includes ----------------------------------*/
-#include "mb.h"
+#include "../include/mb.h"
 #include "mbrtu.h"
-#include "mbframe.h"
+#include "../include/mbframe.h"
 
 #include "mbcrc.h"
-#include "mbport.h"
+#include "../include/mbport.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_SER_PDU_SIZE_MIN     4       /*!< Minimum size of a Modbus RTU frame. */

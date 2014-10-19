@@ -1,4 +1,4 @@
-<<<<<<< HEAD:driverlib/uart.h
+
 //*****************************************************************************
 //
 // uart.h - Defines and Macros for the UART.
@@ -253,7 +253,7 @@ extern void UART9BitAddrSend(unsigned long ulBase, unsigned char ucAddr);
 //
 //*****************************************************************************
 #ifndef DEPRECATED
-#include "driverlib/sysctl.h"
+#include "../driverlib/sysctl.h"
 #define UARTConfigSet(a, b, c)                         \
         UARTConfigSetExpClk(a, SysCtlClockGet(), b, c)
 #define UARTConfigGet(a, b, c)                         \
@@ -274,7 +274,7 @@ extern void UART9BitAddrSend(unsigned long ulBase, unsigned char ucAddr);
 #endif
 
 #endif //  __UART_H__
-=======
+
 //*****************************************************************************
 //
 // uart.h - Defines and Macros for the UART.
@@ -550,4 +550,4 @@ extern void UART9BitAddrSend(unsigned long ulBase, unsigned char ucAddr);
 #endif
 
 #endif //  __UART_H__
->>>>>>> master:inc/uart.h
+

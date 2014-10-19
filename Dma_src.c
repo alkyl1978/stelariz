@@ -4,13 +4,13 @@
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
 #include "inc/hw_timer.h"
-#include "inc/gpio.h"
-#include "inc/sysctl.h"
-#include "inc/interrupt.h"
-#include "inc/timer.h"
-#include "inc/rom.h"
-#include "inc/pin_map.h"
-#include "inc/udma.h"
+#include "../driverlib/gpio.h"
+#include "../driverlib/sysctl.h"
+#include "../driverlib/interrupt.h"
+#include "../driverlib/timer.h"
+#include "../driverlib/rom.h"
+#include "../driverlib/pin_map.h"
+#include "../driverlib/udma.h"
 
 
 void uDMAIntHandler(void)

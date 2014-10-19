@@ -22,7 +22,7 @@
 #ifndef _PORT_H
 #define _PORT_H
 
-#include "hw_memmap.h"
+#include "../../inc/hw_memmap.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define	INLINE

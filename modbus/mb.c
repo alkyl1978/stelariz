@@ -33,7 +33,7 @@
 #include "string.h"
 
 /* ----------------------- Platform includes --------------------------------*/
-#include "port.h"
+#include "../port/port.h"
 
 /* ----------------------- Modbus includes ----------------------------------*/
 #include "mb.h"
@@ -44,11 +44,11 @@
 
 #include "mbport.h"
 #if MB_RTU_ENABLED == 1
-#include "mbrtu.h"
+#include "../rtu/mbrtu.h"
 #endif
 
 #if MB_TCP_ENABLED == 1
-#include "mbtcp.h"
+#include "../tcp/mbtcp.h"
 #endif
 
 #ifndef MB_PORT_HAS_CLOSE
