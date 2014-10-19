@@ -45,6 +45,8 @@ extern void WTimer5AIsr(void);
 extern void WTimer3AIsr(void);
 extern void WTimer3BIsr(void);
 extern void SysTickIntHandler(void);
+extern void uDMAIntHandler(void);
+extern void uDMAErrorHandler(void);
 //*****************************************************************************
 //
 // Reserve space for the system stack.
@@ -124,8 +126,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Hibernate
     IntDefaultHandler,                      // USB0
     IntDefaultHandler,                      // PWM Generator 3
-    IntDefaultHandler,                      // uDMA Software Transfer
-    IntDefaultHandler,                      // uDMA Error
+	uDMAIntHandler,                      // uDMA Software Transfer
+	uDMAErrorHandler,                      // uDMA Error
     IntDefaultHandler,                      // ADC1 Sequence 0
     IntDefaultHandler,                      // ADC1 Sequence 1
     IntDefaultHandler,                      // ADC1 Sequence 2
