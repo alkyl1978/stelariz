@@ -9,5 +9,17 @@
 #define WIZ610_GPIO_PIN_RX                    GPIO_PIN_0
 #define WIZ610_GPIO_PIN_TX                    GPIO_PIN_1
 
+#define wiz_char_start '<'
+#define wiz_char_stop  '>'
+
+typedef enum
+{
+	WIZ_START,
+	WIZ_RESV,
+	WIZ_STOP
+}wiz_rab;
+
 void wiz610_init(void);
+void wiz_start(void);
+unsigned long wizInPrin(void);
 #endif
