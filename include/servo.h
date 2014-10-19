@@ -18,8 +18,8 @@
 #define SERV_Z_TIMER_BASE        WTIMER1_BASE
 
 #define SERV_X_GPIO_PIN            GPIO_PIN_4
-#define SERV_Y_GPIO_PIN           GPIO_PIN_5
-#define SERV_Z_GPIO_PIN          GPIO_PIN_6
+#define SERV_Y_GPIO_PIN            GPIO_PIN_5
+#define SERV_Z_GPIO_PIN            GPIO_PIN_6
 
 
 #define SERV_X_GPIO_PIN_CFG        GPIO_PC4_WT0CCP0
@@ -31,8 +31,8 @@
 #define SERV_Z_TIMER_CFG         TIMER_CFG_A_PWM
 
 #define SERV_X_TIMER               TIMER_A
-#define SERV_Y_TIMER              TIMER_B
-#define SERV_Z_TIMER             TIMER_A
+#define SERV_Y_TIMER               TIMER_B
+#define SERV_Z_TIMER               TIMER_A
 
 void servo_init(void);
 

@@ -4,31 +4,34 @@
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
 #include "inc/hw_timer.h"
-#include "driverlib/gpio.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/timer.h"
-#include "driverlib/rom.h"
-#include "driverlib/pin_map.h"
-#include "include/servo.h"
-#include "include/led.h"
-#include "include/dvig.h"
-#include "include/dat_scor.h"
+#include "inc/gpio.h"
+#include "inc/sysctl.h"
+#include "inc/interrupt.h"
+#include "inc/timer.h"
+#include "inc/rom.h"
+#include "inc/pin_map.h"
+#include "servo.h"
+#include "led.h"
+#include "dvig.h"
+#include "dat_scor.h"
 //********************************************************************************************************
-//
+// 
 //********************************************************************************************************
 extern volatile unsigned long tick_serv;
+extern volatile unsigned long serv_X_0;
+extern volatile unsigned long serv_Y_0;
+extern volatile unsigned long serv_Z_0;
 //********************************************************************************************************
 //
 //
-// ��������� ��������� ����
+//
 //
 //
 //********************************************************************************************************
 void servo_init(void)
 {
-  //******************************************************************************************************
-  // ����������� ��� �������������
+//******************************************************************************************************
+//
 //******************************************************************************************************
   ROM_SysCtlPeripheralEnable(SERV_X_GPIO_PERIPH);
   ROM_SysCtlPeripheralEnable(SERV_X_TIMER_PERIPH);
@@ -79,8 +82,8 @@ void servo_init(void)
   ROM_GPIOPinTypeTimer(SERV_Z_GPIO_BASE, SERV_Z_GPIO_PIN);
   ROM_GPIOPadConfigSet(SERV_Z_GPIO_BASE, SERV_Z_GPIO_PIN, GPIO_STRENGTH_8MA_SC,
                      GPIO_PIN_TYPE_STD);
-// ������� ��������� �������� ����
-  ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, 0);
-  ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, 0);
-  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, 0);
+//
+  ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, serv_X_0);
+  ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, serv_Y_0);
+  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_Z_0);
 }
