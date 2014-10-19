@@ -97,6 +97,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         ROM_GPIOPinConfigure(GPIO_PA0_U0RX);
         ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
         ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+        ROM_SysCtlPeripheralEnable(MODBUS_UART_PERIPH);
         HWREG(MODBUS_UART_BASE + UART_O_LCRH) &= ~(UART_LCRH_FEN);
         HWREG(MODBUS_UART_BASE + UART_O_CTL) &= ~UART_CTL_UARTEN;
         if((ulBaudRate * 16) > ulUARTClk)
