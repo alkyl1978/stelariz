@@ -18,19 +18,19 @@
 //*******************************************************************************************************
 //
 //
-// ��������� ��������� �����������
+//
 //
 //
 //*******************************************************************************************************
 void led_init(void)
 {
-  // �������� ���� �����������
+  //
   ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
   
-  // ������������� ����� ����������� �� �����  
+  //
   ROM_GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, LED_BLU|LED_RED|LED_GREN);
   
-  // ����������� ��� ���������
+  //
   ROM_SysCtlPeripheralEnable(RED_GPIO_PERIPH);
   ROM_SysCtlPeripheralEnable(RED_TIMER_PERIPH);
 
