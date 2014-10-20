@@ -101,7 +101,7 @@ int main()
   ROM_IntMasterEnable();
    while(1)
   {
-    eMBPoll();
+    //eMBPoll();
   }
   return 0;
 }
