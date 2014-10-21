@@ -99,15 +99,8 @@ int main()
   eMBEnable();
   wiz610_init();
   ROM_IntMasterEnable();
-  wiz_start();
    while(1)
   {
-	wiz_put_str("<QZ>");
-	while(wizInPrin()!=WIZ_STOP);
-	if(wizInPrin()==WIZ_STOP)
-	{
-
-	}
     eMBPoll();
   }
   return 0;

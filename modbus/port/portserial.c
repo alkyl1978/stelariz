@@ -145,14 +145,14 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
 
 BOOL xMBPortSerialPutByte( CHAR ucByte )
 {
-    HWREG(MODBUS_UART_BASE + UART_O_DR) = ucByte;
     return TRUE;
 }
 
 BOOL xMBPortSerialGetByte( CHAR * pucByte )
 {
-    *pucByte = ROM_UARTCharGetNonBlocking(MODBUS_UART_BASE);
-    return TRUE;
+	if(!(HWREG(MODBUS_UART_BASE + UART_O_FR) & UART_FR_RXFE)) *pucByte = HWREG(MODBUS_UART_BASE + UART_O_DR);
+	else return FALSE;
+	return TRUE;
 }
 
 
@@ -161,13 +161,9 @@ void prvvMBSerialIRQHandler( void )
     unsigned long ulStatus;    
     ulStatus = ROM_UARTIntStatus(MODBUS_UART_BASE, true);
     ROM_UARTIntClear(MODBUS_UART_BASE, ulStatus);
-    if(ulStatus&UART_INT_TX)
-    {
-      pxMBFrameCBTransmitterEmpty();
-    }
     if(ulStatus&UART_INT_RX)
     {
-      while(ROM_UARTCharsAvail(MODBUS_UART_BASE))
+      while(!(HWREG(MODBUS_UART_BASE + UART_O_FR) & UART_FR_RXFE))
       {
         pxMBFrameCBByteReceived();
       }
@@ -178,18 +174,10 @@ void prvvMBSerialIRQHandler( void )
 
 void EnterCriticalSection( void )
 {
-    if( ucCriticalNesting == 0 )
-    {
 
-    }
-    ucCriticalNesting++;
 }
 
 void ExitCriticalSection( void )
 {
-    ucCriticalNesting--;
-    if( ucCriticalNesting == 0 )
-    {
-       
-    }
+
 }
