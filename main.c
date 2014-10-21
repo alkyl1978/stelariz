@@ -101,9 +101,9 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
+   ROM_IntMasterEnable();
   wiz610_init();
   WIZ610Transfer();
-  ROM_IntMasterEnable();
    while(1)
   {
 
