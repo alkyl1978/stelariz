@@ -182,8 +182,7 @@ eMBErrorCode eMBRTUReceive( UCHAR * pucRcvAddress, UCHAR ** pucFrame, USHORT * p
     return eStatus;
 }
 
-eMBErrorCode
-eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
+eMBErrorCode eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     USHORT          usCRC16;
@@ -221,8 +220,7 @@ eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT usLength )
     return eStatus;
 }
 
-BOOL
-xMBRTUReceiveFSM( void )
+BOOL xMBRTUReceiveFSM( void )
 {
     BOOL            xTaskNeedSwitch = FALSE;
     UCHAR           ucByte;
@@ -281,11 +279,9 @@ xMBRTUReceiveFSM( void )
     return xTaskNeedSwitch;
 }
 
-BOOL
-xMBRTUTransmitFSM( void )
+BOOL xMBRTUTransmitFSM( void )
 {
     BOOL            xNeedPoll = FALSE;
-
     assert( eRcvState == STATE_RX_IDLE );
 
     switch ( eSndState )
@@ -319,8 +315,7 @@ xMBRTUTransmitFSM( void )
     return xNeedPoll;
 }
 
-BOOL
-xMBRTUTimerT35Expired( void )
+BOOL xMBRTUTimerT35Expired( void )
 {
     BOOL   xNeedPoll = FALSE;
 
