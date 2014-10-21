@@ -4,12 +4,15 @@
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
 #include "inc/hw_timer.h"
+#include "inc/hw_uart.h"
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/timer.h"
 #include "driverlib/rom.h"
 #include "driverlib/pin_map.h"
+#include "driverlib/uart.h"
+#include "driverlib/udma.h"
 #include "include/servo.h"
 #include "include/led.h"
 #include "include/dvig.h"
@@ -74,6 +77,7 @@ int main()
 {
   ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
+  ROM_SysCtlPeripheralClockGating(true);
   ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
   DMA_init();
   tick=ROM_SysCtlClockGet();
@@ -98,12 +102,11 @@ int main()
   lcd_goto(3,0);
   lcd_puts("---------------"); 
   wiz610_init();
-  eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
-  eMBEnable();
+  WIZ610Transfer();
   ROM_IntMasterEnable();
    while(1)
   {
-    eMBPoll();
+
   }
   return 0;
 }

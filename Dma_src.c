@@ -13,6 +13,7 @@
 #include "../driverlib/udma.h"
 
 unsigned char ucControlTable[1024] __attribute__ ((aligned(1024)));
+static unsigned long g_ulBadISR = 0;
 
 
 void DMA_init(void)
@@ -20,21 +21,26 @@ void DMA_init(void)
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_UDMA);
 	ROM_SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_UDMA);
 	ROM_IntEnable(INT_UDMAERR);
+	ROM_IntEnable(INT_UDMA);
 	ROM_uDMAEnable();
 	ROM_uDMAControlBaseSet(ucControlTable);
 }
 
 void uDMAIntHandler(void)
 {
-  unsigned long ulMode;
-    //
-    // Check for the primary control structure to indicate complete.
-    //
-    ulMode = ROM_uDMAChannelModeGet(UDMA_CHANNEL_SW);
-     if(ulMode == UDMA_MODE_STOP)
-    {
-      
-    }
+	unsigned long ulMode;
+	    //
+	    // Check for the primary control structure to indicate complete.
+	    //
+	    ulMode = ROM_uDMAChannelModeGet(UDMA_CHANNEL_SW);
+	    if(ulMode == UDMA_MODE_STOP)
+	    {
+
+	    }
+	    else
+	    {
+	        g_ulBadISR++;
+	    }
 }
 
 void uDMAErrorHandler(void)
