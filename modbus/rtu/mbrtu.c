@@ -32,6 +32,22 @@
 #include "stdlib.h"
 #include "string.h"
 
+#include "../../inc/hw_ints.h"
+#include "../../inc/hw_gpio.h"
+#include "../../inc/hw_memmap.h"
+#include "../../inc/hw_sysctl.h"
+#include "../../inc/hw_types.h"
+#include "../../inc/hw_timer.h"
+#include "../../inc/hw_uart.h"
+#include "../../driverlib/gpio.h"
+#include "../../driverlib/sysctl.h"
+#include "../../driverlib/interrupt.h"
+#include "../../driverlib/timer.h"
+#include "../../driverlib/rom.h"
+#include "../../driverlib/pin_map.h"
+#include "../../driverlib/udma.h"
+#include "../../driverlib/uart.h"
+
 /* ----------------------- Platform includes --------------------------------*/
 #include "../port/port.h"
 

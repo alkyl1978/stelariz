@@ -29,7 +29,6 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 {
     unsigned long enb=0;
     unsigned long flag=0;
-    ENTER_CRITICAL_SECTION();
     if( xRxEnable )
     {
         // enable rx
@@ -45,14 +44,10 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     if( xTxEnable )
     {
         // enable tx
-        flag|=UART_CTL_TXE|UART_CTL_UARTEN;
-        enb|=UART_INT_TX;
     }
     else
     {
         // disable tx
-        flag&=~UART_CTL_TXE;
-        enb&=~UART_INT_TX;
     }
     HWREG(MODBUS_UART_BASE+UART_O_CTL)=flag;   
     HWREG(MODBUS_UART_BASE+UART_O_IM)=enb;
@@ -133,7 +128,7 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
           HWREG(MODBUS_UART_BASE + UART_O_LCRH) |= UART_LCRH_FEN;
           HWREG(MODBUS_UART_BASE + UART_O_CTL) |= (UART_CTL_UARTEN );
           ROM_IntEnable(INT_UART0);
-          HWREG(MODBUS_UART_BASE+UART_O_IM)=UART_INT_TX | UART_INT_RX;
+          HWREG(MODBUS_UART_BASE+UART_O_IM)= UART_INT_RX;
           EXIT_CRITICAL_SECTION();     
     }
     else
