@@ -18,6 +18,7 @@
 #include "include/foto.h"
 #include "modbus/include/mb.h"
 #include "include/wiz610.h"
+#include "include/Dma_src.h"
 //****************************************************************************************
 
 //****************************************************************************************
@@ -74,6 +75,7 @@ int main()
   ROM_FPUEnable();
   ROM_FPULazyStackingEnable();
   ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
+  DMA_init();
   tick=ROM_SysCtlClockGet();
   tick_dvig=ROM_SysCtlClockGet()/20000;
   tick_serv=ROM_SysCtlClockGet()/50;
@@ -95,9 +97,9 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
+  wiz610_init();
   eMBInit(MB_RTU,0x0B,0,115200,MB_PAR_NONE);
   eMBEnable();
-  wiz610_init();
   ROM_IntMasterEnable();
    while(1)
   {

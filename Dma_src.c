@@ -12,6 +12,17 @@
 #include "../driverlib/pin_map.h"
 #include "../driverlib/udma.h"
 
+unsigned char ucControlTable[1024] __attribute__ ((aligned(1024)));
+
+
+void DMA_init(void)
+{
+	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_UDMA);
+	ROM_SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_UDMA);
+	ROM_IntEnable(INT_UDMAERR);
+	ROM_uDMAEnable();
+	ROM_uDMAControlBaseSet(ucControlTable);
+}
 
 void uDMAIntHandler(void)
 {
