@@ -16,7 +16,7 @@
 #include "driverlib/udma.h"
 #include "include/wiz610.h"
 
-static unsigned char g_ucTxBuf[256];
+static unsigned char g_ucTxBuf[128];
 
 
 static unsigned long g_ulRxBufACount = 0;
@@ -66,7 +66,6 @@ void wiz610_uart_isr(void)
 	    {
 	    	g_Wiz610_fTXDMA_STOP=true;
 	    }
-	    }
 }
 
 void WIZ610Transfer(void)
@@ -85,9 +84,15 @@ void WIZ610Transfer(void)
 
 unsigned char Wiz610_put_buf(unsigned char *buf, unsigned long count)
 {
+	unsigned long i;
 	if (ROM_uDMAChannelModeGet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT)!=UDMA_MODE_STOP) return false;
+	i=0;
+	while(i<count)
+	{
+		g_ucTxBuf[i]=*buf++;
+	}
 	ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT,
-	                               UDMA_MODE_BASIC,(void *) buf,
+	                               UDMA_MODE_BASIC,(void *) g_ucTxBuf,
 	                               (void *)(UART1_BASE + UART_O_DR),
 	                                count);
 	ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1TX);
