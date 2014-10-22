@@ -17,7 +17,6 @@
 #include "include/wiz610.h"
 
 static unsigned char g_ucTxBuf[256];
-static unsigned char g_ucRxBuf[256];
 
 
 static unsigned long g_ulRxBufACount = 0;
@@ -43,8 +42,8 @@ void wiz610_init(void)
   ROM_UARTFIFOLevelSet(WIZ610_UART_BASE, UART_FIFO_TX1_8, UART_FIFO_RX1_8);
   ROM_IntEnable(INT_UART1);
   ROM_UARTEnable(WIZ610_UART_BASE);
-  ROM_UARTDMAEnable(WIZ610_UART_BASE, UART_DMA_RX | UART_DMA_TX);
-  ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX | UART_INT_TX);
+  ROM_UARTDMAEnable(WIZ610_UART_BASE, UART_DMA_TX);
+  ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX);
   ROM_IntEnable(INT_UDMA);
 }
 
@@ -67,41 +66,11 @@ void wiz610_uart_isr(void)
 	    {
 	    	g_Wiz610_fTXDMA_STOP=true;
 	    }
-	    ulMode = ROM_uDMAChannelModeGet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT);
-	    if(ulMode == UDMA_MODE_STOP)
-	    {
-	        ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT,
-	        							UDMA_MODE_BASIC,
-	                                   (void *)(WIZ610_UART_BASE + UART_O_DR),
-	                                   g_ucRxBuf, sizeof(g_ucRxBuf));
 	    }
 }
 
 void WIZ610Transfer(void)
 {
-	ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_UART1RX,
-	                                    UDMA_ATTR_ALTSELECT |
-	                                    UDMA_ATTR_HIGH_PRIORITY |
-	                                    UDMA_ATTR_REQMASK);
-	ROM_uDMAChannelAttributeEnable(UDMA_CHANNEL_UART1RX, UDMA_ATTR_USEBURST);
-
-	ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1RX | UDMA_ALT_SELECT,
-	                              UDMA_SIZE_8 | UDMA_SRC_INC_NONE | UDMA_DST_INC_8 |
-	                              UDMA_ARB_4);
-
-    ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT,
-                              UDMA_SIZE_8 | UDMA_SRC_INC_NONE | UDMA_DST_INC_8 |
-                              UDMA_ARB_1);
-
-    ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT,
-    						   UDMA_MODE_PINGPONG,
-                               (void *)(UART1_BASE + UART_O_DR),
-                               g_ucRxBuf, sizeof(g_ucRxBuf));
-    ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1RX | UDMA_ALT_SELECT,
-    							   UDMA_MODE_PINGPONG,
-                                   (void *)(UART1_BASE + UART_O_DR),
-                                   g_ucRxBuf, sizeof(g_ucRxBuf));
-    ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1RX);
     ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_UART1TX,
                                         UDMA_ATTR_ALTSELECT |
                                         UDMA_ATTR_HIGH_PRIORITY |
