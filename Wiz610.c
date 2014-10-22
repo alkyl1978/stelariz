@@ -39,7 +39,7 @@ void wiz610_init(void)
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
   ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,0);
-  ROM_UARTFIFOLevelSet(WIZ610_UART_BASE, UART_FIFO_TX1_8, UART_FIFO_RX1_8);
+  ROM_UARTFIFOLevelSet(WIZ610_UART_BASE, UART_FIFO_TX4_8, UART_FIFO_RX1_8);
   ROM_IntEnable(INT_UART1);
   ROM_UARTEnable(WIZ610_UART_BASE);
   ROM_UARTDMAEnable(WIZ610_UART_BASE, UART_DMA_TX);
@@ -56,16 +56,11 @@ void wiz610_uart_isr(void)
 	    if(ulStatus==UART_INT_RX)
 	    {
 	    	g_Wiz610_fRX=true;
-
-	    }
-	    if(ulStatus==UART_INT_TX)
-	    {
-	    	g_Wiz610_fTX=true;
-	    }
-	    ulMode = ROM_uDMAChannelModeGet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT);
-	    if(ulMode==UDMA_MODE_STOP)
-	    {
-	    	g_Wiz610_fTXDMA_STOP=true;
+	    	while(!(HWREG(WIZ610_UART_BASE + UART_O_FR) & UART_FR_RXFE))
+	    	{
+	    		g_ucRxBuf[g_ulRxBufACount]=HWREG(WIZ610_UART_BASE+UART_O_DR);
+	    		g_ulRxBufACount=(g_ulRxBufACount+1)&0x7f;
+	    	}
 	    }
 }
 
@@ -79,7 +74,7 @@ void WIZ610Transfer(void)
 
     ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT,
                               UDMA_SIZE_8 | UDMA_SRC_INC_8 | UDMA_DST_INC_NONE |
-                              UDMA_ARB_1);
+                              UDMA_ARB_4);
 
 }
 
