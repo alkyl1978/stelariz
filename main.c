@@ -104,6 +104,7 @@ int main()
    ROM_IntMasterEnable();
   wiz610_init();
   WIZ610Transfer();
+  Wiz610_put_buf("get",3);
    while(1)
   {
 
