@@ -93,43 +93,9 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
         ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
         ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
         ROM_SysCtlPeripheralEnable(MODBUS_UART_PERIPH);
-        HWREG(MODBUS_UART_BASE + UART_O_LCRH) &= ~(UART_LCRH_FEN);
-        HWREG(MODBUS_UART_BASE + UART_O_CTL) &= ~UART_CTL_UARTEN;
-        if((ulBaudRate * 16) > ulUARTClk)
-        {
-          //
-          // Enable high speed mode.
-          //
-          HWREG(MODBUS_UART_BASE + UART_O_CTL) |= UART_CTL_HSE;
-          //
-          // Half the supplied baud rate to compensate for enabling high speed
-          // mode.  This allows the following code to be common to both cases.
-          //
-          ulBaudRate /= 2;
-         }
-        else
-          {
-            //
-            // Disable high speed mode.
-            //
-            HWREG(MODBUS_UART_BASE + UART_O_CTL) &= ~(UART_CTL_HSE);
-          }
-          //
-          // Compute the fractional baud rate divider.
-          //
-          ulDiv = (((ulUARTClk * 8) / ulBaudRate) + 1) / 2;
-          HWREG(MODBUS_UART_BASE + UART_O_IBRD) = ulDiv / 64;
-          HWREG(MODBUS_UART_BASE + UART_O_FBRD) = ulDiv % 64;
-          //
-          // Clear the flags register.
-          //
-          HWREG(MODBUS_UART_BASE + UART_O_FR) = 0;
-          HWREG(MODBUS_UART_BASE + UART_O_LCRH) = ulConfig;
-          HWREG(MODBUS_UART_BASE + UART_O_LCRH) |= UART_LCRH_FEN;
-          HWREG(MODBUS_UART_BASE + UART_O_CTL) |= (UART_CTL_UARTEN );
-          ROM_IntEnable(INT_UART0);
-          HWREG(MODBUS_UART_BASE+UART_O_IM)= UART_INT_RX;
-          EXIT_CRITICAL_SECTION();     
+        ROM_UARTConfigSetExpClk(MODBUS_UART_BASE, ROM_SysCtlClockGet(), ulBaudRate,ulConfig);
+        ROM_UARTFIFOLevelSet(MODBUS_UART_BASE, UART_FIFO_TX1_8, UART_FIFO_RX1_8);
+        ROM_IntEnable(INT_UART0);
     }
     else
     {
