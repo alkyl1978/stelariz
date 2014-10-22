@@ -85,14 +85,22 @@ void WIZ610Transfer(void)
 	                                    UDMA_ATTR_REQMASK);
 	ROM_uDMAChannelAttributeEnable(UDMA_CHANNEL_UART1RX, UDMA_ATTR_USEBURST);
 
+	ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1RX | UDMA_ALT_SELECT,
+	                              UDMA_SIZE_8 | UDMA_SRC_INC_NONE | UDMA_DST_INC_8 |
+	                              UDMA_ARB_4);
+
     ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT,
                               UDMA_SIZE_8 | UDMA_SRC_INC_NONE | UDMA_DST_INC_8 |
                               UDMA_ARB_1);
 
     ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT,
-    						   UDMA_MODE_AUTO,
+    						   UDMA_MODE_PINGPONG,
                                (void *)(UART1_BASE + UART_O_DR),
                                g_ucRxBuf, sizeof(g_ucRxBuf));
+    ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1RX | UDMA_ALT_SELECT,
+    							   UDMA_MODE_PINGPONG,
+                                   (void *)(UART1_BASE + UART_O_DR),
+                                   g_ucRxBuf, sizeof(g_ucRxBuf));
     ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1RX);
     ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_UART1TX,
                                         UDMA_ATTR_ALTSELECT |
