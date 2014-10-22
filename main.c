@@ -23,7 +23,9 @@
 #include "include/wiz610.h"
 #include "include/Dma_src.h"
 //****************************************************************************************
-
+unsigned char buf_rab[128];
+unsigned char i;
+unsigned long Sys_tick=0;
 //****************************************************************************************
 //
 //
@@ -64,7 +66,7 @@ void SysTickTimer_init(void)
 //******************************************************************************************************
 void SysTickIntHandler(void)
 {
-
+	Sys_tick++;
 }
 //******************************************************************************************************
 //
@@ -88,6 +90,7 @@ int main()
   serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Z_Angle;
   dvig_napr[0]=0;
   dvig_napr[1]=0;
+  SysTickTimer_init();
   servo_init();
   led_init();
   lcd_init();
@@ -105,6 +108,10 @@ int main()
   wiz610_init();
   WIZ610Transfer();
   Wiz610_put_buf("<RF>",4);
+  Sys_tick=0;
+  while((Wiz610_get_simvol('<')!=0xff)||Sys_tick>100);
+  while((Wiz610_get_simvol('<')!=0xff)||Sys_tick>100);
+  i=Wiz610_get_buf(buf_rab);
    while(1)
   {
 

@@ -20,7 +20,6 @@ unsigned char g_ucTxBuf[128];
 unsigned char g_ucRxBuf[128];
 
 static unsigned long g_ulRxBufACount = 0;
-static unsigned long g_Wiz610_fTX;
 static unsigned long g_Wiz610_fTXDMA_STOP;
 static unsigned long g_Wiz610_fRX;
 
@@ -94,4 +93,31 @@ unsigned char Wiz610_put_buf(unsigned char *buf, unsigned long count)
 	                                count);
 	ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1TX);
     return true;
+}
+
+unsigned char Wiz610_get_buf(unsigned char *buf)
+{
+unsigned char i,j;
+i=Wiz610_get_simvol('<');
+j=Wiz610_get_simvol('>');
+if (i==0xff||j==0xff) return 0xff;
+while(i<=j)
+{
+	*buf++=g_ucRxBuf[i++];
+}
+g_ulRxBufACount=0;
+j=j-i-1;
+return j;
+}
+
+unsigned char Wiz610_get_simvol(unsigned char simvol)
+{
+	unsigned char i;
+	i=0;
+	while(i<=g_ulRxBufACount)
+	{
+		if(g_ucRxBuf[i]==simvol) return i;
+		i++;
+	}
+	return 0xff;
 }

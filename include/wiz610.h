@@ -22,4 +22,6 @@ typedef enum
 void wiz610_init(void);
 void WIZ610Transfer(void);
 unsigned char Wiz610_put_buf(unsigned char *buf, unsigned long count);
+unsigned char Wiz610_get_buf(unsigned char *buf);
+unsigned char Wiz610_get_simvol(unsigned char simvol);
 #endif
