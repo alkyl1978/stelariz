@@ -79,7 +79,10 @@ void wiz610_uart_isr(void)
 
 void WIZ610Transfer(void)
 {
-	ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_UART1TX);
+	ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_UART1RX,
+	                                    UDMA_ATTR_ALTSELECT |
+	                                    UDMA_ATTR_HIGH_PRIORITY |
+	                                    UDMA_ATTR_REQMASK);
 	ROM_uDMAChannelAttributeEnable(UDMA_CHANNEL_UART1RX, UDMA_ATTR_USEBURST);
 
     ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1RX | UDMA_PRI_SELECT,
@@ -91,7 +94,10 @@ void WIZ610Transfer(void)
                                (void *)(UART1_BASE + UART_O_DR),
                                g_ucRxBuf, sizeof(g_ucRxBuf));
     ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1RX);
-
+    ROM_uDMAChannelAttributeDisable(UDMA_CHANNEL_UART1TX,
+                                        UDMA_ATTR_ALTSELECT |
+                                        UDMA_ATTR_HIGH_PRIORITY |
+                                        UDMA_ATTR_REQMASK);
     ROM_uDMAChannelAttributeEnable(UDMA_CHANNEL_UART1TX, UDMA_ATTR_USEBURST);
 
     ROM_uDMAChannelControlSet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT,
