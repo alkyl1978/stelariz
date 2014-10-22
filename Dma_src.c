@@ -50,6 +50,6 @@ void uDMAErrorHandler(void)
   // Check for uDMA error bit
   //
   ulStatus = ROM_uDMAErrorStatusGet();
-  if(ulStatus) ROM_uDMAErrorStatusClear();
+    if(ulStatus) ROM_uDMAErrorStatusClear();
 }
 
