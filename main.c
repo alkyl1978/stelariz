@@ -114,35 +114,64 @@ int main()
   lcd_puts(" *STACK-SPORT* "); 
   lcd_goto(3,0);
   lcd_puts("---------------"); 
-   ROM_IntMasterEnable();
+  ROM_IntMasterEnable();
   wiz610_init();
   WIZ610Transfer();
-  // RESET WI-FI
-  Wiz610_put_buf("<WR>",4);
   Sys_tick=0;
-  while(Sys_tick>10000 && Wiz610_cmd_get!=0);
-  Sys_tick=0;
-  lcd_temizle();
-  Wiz610_cmd_get=false;
+  while(Sys_tick>1000);
   lcd_temizle();
   lcd_goto(0,0);
-  lcd_puts("WI-FI REBOOT");
+  lcd_puts("WI-FI INIT");
+start1:
+  Wiz610_cmd_get=false;
+  Wiz610_put_buf("<RF>",4);
   while(!Wiz610_cmd_get)
   {
-	  if(Sys_tick>10000)
-	  {
-		  Wiz610_put_buf("<RF>",4);
-		  Sys_tick=0;
-	  }
+	if(Sys_tick>100)
+	{
+		Wiz610_put_buf("<RF>",4);
+		Sys_tick=0;
+	}
   }
+  if (Wiz610_cmd_get<2) goto start1;
   lcd_temizle();
   lcd_goto(0,0);
   lcd_puts("WI-FI RUN");
   lcd_goto(1,0);
+  lcd_puts("ver :");
+  lcd_goto(1,6);
+  lcd_puts(&buf_rab[1]);
   Wiz610_cmd_get=false;
-  Wiz610_put_buf("<RF>",4);
-  while(!Wiz610_cmd_get);
-  lcd_puts(buf_rab);
+  Wiz610_put_buf("<DS>",4);
+  Sys_tick=0;
+  while(!Wiz610_cmd_get)
+   {
+ 	if(Sys_tick>100)
+ 	{
+ 		Wiz610_put_buf("<DS>",4);
+ 		Sys_tick=0;
+ 	}
+   }
+  lcd_goto(2,0);
+  lcd_puts("SSID :");
+  lcd_goto(2,7);
+  lcd_puts(&buf_rab[1]);
+
+  Wiz610_cmd_get=false;
+  Wiz610_put_buf("<DC>",4);
+  Sys_tick=0;
+  while(!Wiz610_cmd_get)
+  {
+   	if(Sys_tick>100)
+   	{
+   		Wiz610_put_buf("<DC>",4);
+   		Sys_tick=0;
+   	}
+  }
+  lcd_goto(3,0);
+  lcd_puts("Kanal :");
+  lcd_goto(3,8);
+  lcd_puts(&buf_rab[1]);
    while(1)
   {
 

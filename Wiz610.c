@@ -135,6 +135,7 @@ unsigned char Wiz610_get_buf(unsigned char *buf)
 		*buf++=g_ucRxBuf[i];
 		i++;
 	}
+	*buf=0;
 	cmd_get=false;
 	i=g_ulRxBufACount;
 	g_ulRxBufACount=0;
