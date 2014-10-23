@@ -19,9 +19,10 @@
 unsigned char g_ucTxBuf[128];
 unsigned char g_ucRxBuf[128];
 
-static unsigned long g_ulRxBufACount = 0;
-static unsigned long g_Wiz610_fTXDMA_STOP;
-static unsigned long g_Wiz610_fRX;
+unsigned long g_ulRxBufACount = 0;
+unsigned long g_Wiz610_fRX;
+unsigned long frab;
+unsigned long cmd_get;
 
 void wiz610_init(void)
 {
@@ -50,15 +51,40 @@ void wiz610_uart_isr(void)
 {
 		unsigned long ulStatus;
 		unsigned long ulMode;
+		unsigned char data;
 	    ulStatus = ROM_UARTIntStatus(WIZ610_UART_BASE, true);
 	    ROM_UARTIntClear(WIZ610_UART_BASE, ulStatus);
 	    if(ulStatus==UART_INT_RX)
 	    {
 	    	g_Wiz610_fRX=true;
+	    	cmd_get=false;
 	    	while(!(HWREG(WIZ610_UART_BASE + UART_O_FR) & UART_FR_RXFE))
 	    	{
-	    		g_ucRxBuf[g_ulRxBufACount]=HWREG(WIZ610_UART_BASE+UART_O_DR);
-	    		g_ulRxBufACount=(g_ulRxBufACount+1)&0x7f;
+	    		data=HWREG(WIZ610_UART_BASE+UART_O_DR);
+	    		if(frab==WIZ_IDLE)
+	    		{
+	    			if(data=='<') frab=WIZ_START;
+	    			if(data=='>') frab=WIZ_STOP;
+	    			cmd_get=false;
+	    		}
+	    		else
+	    		{
+	    			if(frab==WIZ_START)
+	    			{
+	    				if(data=='>') frab=WIZ_STOP;
+	    				else
+	    				{
+	    					g_ucRxBuf[g_ulRxBufACount]=data;
+	    					g_ulRxBufACount=(g_ulRxBufACount+1)&0x7f;
+	    				}
+	    			}
+	    		}
+	    		if(frab==WIZ_STOP)
+	    		{
+	    			ROM_UARTDisable(WIZ610_UART_BASE);
+	    			cmd_get=true;
+	    		}
+
 	    	}
 	    }
 }
@@ -80,7 +106,9 @@ void WIZ610Transfer(void)
 unsigned char Wiz610_put_buf(unsigned char *buf, unsigned long count)
 {
 	unsigned long i;
-	if (ROM_uDMAChannelModeGet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT)!=UDMA_MODE_STOP) return false;
+	unsigned long ulMode;
+	ulMode=ROM_uDMAChannelModeGet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT);
+	if (ulMode!=UDMA_MODE_STOP) return false;
 	i=0;
 	while(i<count)
 	{
@@ -91,33 +119,25 @@ unsigned char Wiz610_put_buf(unsigned char *buf, unsigned long count)
 	                               UDMA_MODE_BASIC,(void *) g_ucTxBuf,
 	                               (void *)(UART1_BASE + UART_O_DR),
 	                                count);
+	ROM_UARTEnable(WIZ610_UART_BASE);
 	ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1TX);
     return true;
 }
 
 unsigned char Wiz610_get_buf(unsigned char *buf)
 {
-unsigned char i,j;
-i=Wiz610_get_simvol('<');
-j=Wiz610_get_simvol('>');
-if (i==0xff||j==0xff) return 0xff;
-while(i<=j)
-{
-	*buf++=g_ucRxBuf[i++];
-}
-g_ulRxBufACount=0;
-j=j-i-1;
-return j;
-}
-
-unsigned char Wiz610_get_simvol(unsigned char simvol)
-{
 	unsigned char i;
+	if(!cmd_get) return false;
+	ROM_UARTDisable(WIZ610_UART_BASE);
 	i=0;
-	while(i<=g_ulRxBufACount)
+	while(i<g_ulRxBufACount)
 	{
-		if(g_ucRxBuf[i]==simvol) return i;
+		*buf++=g_ucRxBuf[i];
 		i++;
 	}
-	return 0xff;
+	cmd_get=false;
+	i=g_ulRxBufACount;
+	g_ulRxBufACount=0;
+	frab=WIZ_IDLE;
+	return i;
 }
