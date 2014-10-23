@@ -23,10 +23,7 @@
 #include "include/wiz610.h"
 #include "include/Dma_src.h"
 //****************************************************************************************
-unsigned char buf_rab[128];
-unsigned long Sys_tick=0;
-unsigned long Wiz610_cmd_get=false;
-void ind_wiz610_wi_fi(void);
+
 //****************************************************************************************
 //
 //
@@ -67,17 +64,7 @@ void SysTickTimer_init(void)
 //******************************************************************************************************
 void SysTickIntHandler(void)
 {
-	unsigned char i;
-	Sys_tick++;
-	if(!Wiz610_cmd_get)
-	{
-		i=false;
-		i=Wiz610_get_buf(buf_rab);
-		if(i!=false)
-		{
-			Wiz610_cmd_get=i;
-		}
-	}
+
 }
 //******************************************************************************************************
 //
@@ -116,71 +103,9 @@ int main()
   lcd_goto(3,0);
   lcd_puts("---------------"); 
   ROM_IntMasterEnable();
-  wiz610_init();
-  WIZ610Transfer();
-  Sys_tick=0;
-  while(Sys_tick>1000);
-  lcd_temizle();
-  lcd_goto(0,0);
-  lcd_puts("WI-FI INIT");
-  ind_wiz610_wi_fi();
    while(1)
   {
 
   }
   return 0;
-}
-
-void ind_wiz610_wi_fi(void)
-{
-	start1:
-	  Wiz610_cmd_get=false;
-	  Wiz610_put_buf("<RF>",4);
-	  while(!Wiz610_cmd_get)
-	  {
-		if(Sys_tick>100)
-		{
-			Wiz610_put_buf("<RF>",4);
-			Sys_tick=0;
-		}
-	  }
-	  if (Wiz610_cmd_get<2) goto start1;
-	  lcd_temizle();
-	  lcd_goto(0,0);
-	  lcd_puts("WI-FI RUN");
-	  lcd_goto(1,0);
-	  lcd_puts("ver :");
-	  lcd_goto(1,6);
-	  lcd_puts(&buf_rab[1]);
-	  Wiz610_cmd_get=false;
-	  Wiz610_put_buf("<DS>",4);
-	  Sys_tick=0;
-	  while(!Wiz610_cmd_get)
-	   {
-	 	if(Sys_tick>100)
-	 	{
-	 		Wiz610_put_buf("<DS>",4);
-	 		Sys_tick=0;
-	 	}
-	   }
-	  lcd_goto(2,0);
-	  lcd_puts("SSID :");
-	  lcd_goto(2,7);
-	  lcd_puts(&buf_rab[1]);
-
-	  Wiz610_cmd_get=false;
-	  Wiz610_put_buf("<RI>",4);
-	  Sys_tick=0;
-	  while(!Wiz610_cmd_get)
-	  {
-	   	if(Sys_tick>100)
-	   	{
-	   		Wiz610_put_buf("<RI>",4);
-	   		Sys_tick=0;
-	   	}
-	  }
-	  lcd_goto(3,0);
-	  lcd_puts("IP:");
-	  lcd_goto(3,3);
-	  lcd_puts(&buf_rab[1]);
 }
