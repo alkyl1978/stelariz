@@ -103,9 +103,11 @@ int main()
   lcd_goto(3,0);
   lcd_puts("---------------"); 
   ROM_IntMasterEnable();
+  eMBInit(MB_RTU,0x01,0,115200,MB_PAR_NONE);
+  eMBEnable();
    while(1)
   {
-
+	   eMBPoll();
   }
   return 0;
 }

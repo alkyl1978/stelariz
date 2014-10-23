@@ -44,6 +44,7 @@ void vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     if( xTxEnable )
     {
         // enable tx
+    	flag|=UART_CTL_UARTEN;
     }
     else
     {
