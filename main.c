@@ -26,7 +26,9 @@
 unsigned char buf_rab[128];
 unsigned long Sys_tick=0;
 unsigned long Wiz610_cmd_get=false;
+
 void ind_wiz610_wi_fi(void);
+void ind_wiz610_serial(void);
 //****************************************************************************************
 //
 //
@@ -124,11 +126,45 @@ int main()
   lcd_goto(0,0);
   lcd_puts("WI-FI INIT");
   ind_wiz610_wi_fi();
+  ind_wiz610_serial();
    while(1)
   {
 
   }
   return 0;
+}
+void ind_wiz610_serial(void)
+{
+	 Wiz610_cmd_get=false;
+	 Wiz610_put_buf("<RM>",4);
+	 while(!Wiz610_cmd_get);
+	 lcd_temizle();
+	 lcd_goto(0,0);
+	 lcd_puts("Type:");
+	 lcd_goto(0,6);
+	 switch(buf_rab[1])
+	 {
+	 case 0x30:
+	 {
+		 lcd_puts("Client ");
+		 break;
+	 }
+	 case 0x31:
+	 {
+		 lcd_puts("Mixed ");
+		 break;
+	 }
+	 case 0x32:
+	 {
+		 lcd_puts("Server ");
+		 break;
+	 }
+	 }
+	 Wiz610_cmd_get=false;
+	 Wiz610_put_buf("<RK>",4);
+	 while(!Wiz610_cmd_get);
+	 if(buf_rab[1]=='0') lcd_puts("TCP");
+	 else lcd_puts("UDP");
 }
 
 void ind_wiz610_wi_fi(void)
