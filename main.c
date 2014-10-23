@@ -138,6 +138,11 @@ int main()
   lcd_temizle();
   lcd_goto(0,0);
   lcd_puts("WI-FI RUN");
+  lcd_goto(1,0);
+  Wiz610_cmd_get=false;
+  Wiz610_put_buf("<RF>",4);
+  while(!Wiz610_cmd_get);
+  lcd_puts(buf_rab);
    while(1)
   {
 
