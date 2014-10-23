@@ -138,8 +138,7 @@ eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity ePar
     return eStatus;
 }
 
-void
-eMBRTUStart( void )
+void eMBRTUStart( void )
 {
     ENTER_CRITICAL_SECTION(  );
     /* Initially the receiver is in the state STATE_RX_INIT. we start
@@ -154,8 +153,7 @@ eMBRTUStart( void )
     EXIT_CRITICAL_SECTION(  );
 }
 
-void
-eMBRTUStop( void )
+void eMBRTUStop( void )
 {
     ENTER_CRITICAL_SECTION(  );
     vMBPortSerialEnable( FALSE, FALSE );
@@ -227,6 +225,11 @@ eMBErrorCode eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT us
         /* Activate the transmitter. */
         eSndState = STATE_TX_XMIT;
         vMBPortSerialEnable( FALSE, TRUE );
+        ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART0TX | UDMA_PRI_SELECT,
+        	                               UDMA_MODE_BASIC,(void *)  ucRTUBuf,
+        	                               (void *)(UART1_BASE + UART_O_DR),
+										   usSndBufferCount);
+        ROM_uDMAChannelEnable(UDMA_CHANNEL_UART0TX);
     }
     else
     {
