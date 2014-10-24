@@ -36,8 +36,5 @@ typedef long    LONG;
 #define MODBUS_UART_BASE UART0_BASE
 #define MODBUS_UART_PERIPH SYSCTL_PERIPH_UART0
 
-void            EnterCriticalSection( void );
-void            ExitCriticalSection( void );
-
 
 #endif

@@ -45,34 +45,35 @@
  * one second.
  */
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timeout50us )
+BOOL xMBPortTimersInit( USHORT usTim1Timeout50us )
 {
     BOOL            bInitialized = FALSE;
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
-    ROM_TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
-    ROM_TimerLoadSet(TIMER2_BASE, TIMER_A, ROM_SysCtlClockGet()/10000);
+    ROM_TimerConfigure(TIMER2_BASE, TIMER_CFG_A_PERIODIC_UP);
+    ROM_TimerLoadSet(TIMER2_BASE, TIMER_A, 150000);
     ROM_IntEnable(INT_TIMER2A); 
     ROM_TimerIntEnable(TIMER2_BASE, TIMER_TIMA_TIMEOUT);    
     bInitialized = TRUE;
     return bInitialized;
 }
 
-void
-vMBPortTimersEnable( void )
+void vMBPortTimersEnable( void )
 {
+	ROM_TimerLoadSet(TIMER2_BASE, TIMER_A, 150000);
     ROM_TimerEnable(TIMER2_BASE, TIMER_A);
+    //HWREG(MODBUS_UART_BASE + UART_O_DR)='E';
 }
 
-void
-vMBPortTimersDisable( void )
+void vMBPortTimersDisable( void )
 {
    ROM_TimerDisable(TIMER2_BASE, TIMER_A);
+   //HWREG(MODBUS_UART_BASE + UART_O_DR)='D';
 }
 
 
 void prvvMBTimerIRQHandler( void )
 {
     ROM_TimerIntClear(TIMER2_BASE, TIMER_TIMA_TIMEOUT);
+    //HWREG(MODBUS_UART_BASE + UART_O_DR)='T';
     pxMBPortCBTimerExpired();
 }
