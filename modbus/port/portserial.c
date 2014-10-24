@@ -44,19 +44,20 @@ void vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     if( xTxEnable )
     {
         // enable tx
-    	flag|=UART_CTL_UARTEN;
+    	flag|=UART_CTL_UARTEN|UART_CTL_TXE;
+    	enb|=UART_INT_TX;
     }
     else
     {
         // disable tx
+    	flag&=~UART_CTL_TXE;
+    	enb&=~UART_INT_TX;
     }
     HWREG(MODBUS_UART_BASE+UART_O_CTL)=flag;   
     HWREG(MODBUS_UART_BASE+UART_O_IM)=enb;
-    EXIT_CRITICAL_SECTION();
 }
 
-BOOL
-xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
+BOOL xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
     BOOL            bInitialized = TRUE; 
     unsigned long ulDiv,ulUARTClk,ulConfig;
@@ -89,7 +90,6 @@ xMBPortSerialInit( UCHAR ucPort, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
     }
     if( bInitialized )
     {
-        ENTER_CRITICAL_SECTION();
         ROM_GPIOPinConfigure(GPIO_PA0_U0RX);
         ROM_GPIOPinConfigure(GPIO_PA1_U0TX);
         ROM_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
@@ -140,16 +140,4 @@ void prvvMBSerialIRQHandler( void )
         pxMBFrameCBByteReceived();
       }
     }      
-}
-
-
-
-void EnterCriticalSection( void )
-{
-
-}
-
-void ExitCriticalSection( void )
-{
-
 }

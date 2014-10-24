@@ -45,8 +45,7 @@
  * one second.
  */
 /* ----------------------- Start implementation -----------------------------*/
-BOOL
-xMBPortTimersInit( USHORT usTim1Timeout50us )
+BOOL xMBPortTimersInit( USHORT usTim1Timeout50us )
 {
     BOOL            bInitialized = FALSE;
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
@@ -58,14 +57,12 @@ xMBPortTimersInit( USHORT usTim1Timeout50us )
     return bInitialized;
 }
 
-void
-vMBPortTimersEnable( void )
+void vMBPortTimersEnable( void )
 {
     ROM_TimerEnable(TIMER2_BASE, TIMER_A);
 }
 
-void
-vMBPortTimersDisable( void )
+void vMBPortTimersDisable( void )
 {
    ROM_TimerDisable(TIMER2_BASE, TIMER_A);
 }

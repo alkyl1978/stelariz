@@ -107,6 +107,7 @@ eMBErrorCode eMBRTUInit( UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, e
     else
     {
        // настройка таймера
+    	xMBPortTimersInit(100);
     }
     return eStatus;
 }
@@ -180,7 +181,7 @@ eMBErrorCode eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT us
         vMBPortSerialEnable( FALSE, TRUE );
         ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART0TX | UDMA_PRI_SELECT,
         	                               UDMA_MODE_BASIC,(void *)  ucRTUBuf,
-        	                               (void *)(UART0_BASE + UART_O_DR),
+        	                               (void *)(MODBUS_UART_BASE + UART_O_DR),
 										   usSndBufferCount);
         ROM_uDMAChannelEnable(UDMA_CHANNEL_UART0TX);
     }
@@ -188,7 +189,6 @@ eMBErrorCode eMBRTUSend( UCHAR ucSlaveAddress, const UCHAR * pucFrame, USHORT us
     {
         eStatus = MB_EIO;
     }
-    EXIT_CRITICAL_SECTION(  );
     return eStatus;
 }
 
@@ -302,8 +302,6 @@ BOOL xMBRTUTimerT35Expired( void )
     case STATE_RX_ERROR:
         break;
 
-        /* Function called in an illegal state. */
-    default:
     }
     vMBPortTimersDisable(  );
     eRcvState = STATE_RX_IDLE;
