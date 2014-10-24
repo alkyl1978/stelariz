@@ -1,6 +1,4 @@
 #include "mb.h"
-USHORT adres;
-USHORT reg;
 
 eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
                eMBRegisterMode eMode )
@@ -28,22 +26,30 @@ eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCo
 
 eMBErrorCode eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 {
-	*pucRegBuffer=0;
-	pucRegBuffer++;
-	*pucRegBuffer=0;
+	USHORT count;
+	count=usNRegs<<2;
+	while (count)
+	{
+		*pucRegBuffer++=0;
+		 count--;
+	}
     return MB_ENOERR;
 }
 
 eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
                  eMBRegisterMode eMode )
 {
+	USHORT count;
+	count=usNRegs<<2;
     switch(eMode)
     {
       case MB_REG_READ: 
         {
-        	*pucRegBuffer=0;
-        	pucRegBuffer++;
-        	*pucRegBuffer=0;
+          while (count)
+          {
+        		*pucRegBuffer++=0;
+        		count--;
+          }
           break;
         }
     case MB_REG_WRITE:
@@ -54,8 +60,6 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
           break;
       }
     }
-    adres=usAddress;
-    reg=usNRegs;
     return MB_ENOERR;
 }
 
