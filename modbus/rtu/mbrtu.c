@@ -250,6 +250,8 @@ BOOL xMBRTUReceiveFSM( void )
 BOOL xMBRTUTransmitFSM( void )
 {
     BOOL            xNeedPoll = FALSE;
+    unsigned long ulMode;
+
     switch ( eSndState )
     {
         /* We should not get a transmitter event if the transmitter is in
@@ -260,14 +262,9 @@ BOOL xMBRTUTransmitFSM( void )
         break;
 
     case STATE_TX_XMIT:
+    	 ulMode=ROM_uDMAChannelModeGet(UDMA_CHANNEL_UART0TX | UDMA_PRI_SELECT);
         /* check if we are finished. */
-        if( usSndBufferCount != 0 )
-        {
-            xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur);
-            pucSndBufferCur++;  /* next byte in sendbuffer. */
-            usSndBufferCount--;
-        }
-        else
+        if( ulMode == UDMA_MODE_STOP )
         {
             xNeedPoll = xMBPortEventPost( EV_FRAME_SENT );
             /* Disable transmitter. This prevents another transmit buffer

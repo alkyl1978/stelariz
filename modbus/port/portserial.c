@@ -53,6 +53,8 @@ void vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     	flag&=~UART_CTL_TXE;
     	enb&=~UART_INT_TX;
     }
+    flag|=UART_CTL_UARTEN|UART_CTL_TXE;
+    enb|=UART_INT_TX;
     HWREG(MODBUS_UART_BASE+UART_O_CTL)=flag;   
     HWREG(MODBUS_UART_BASE+UART_O_IM)=enb;
 }
@@ -139,5 +141,9 @@ void prvvMBSerialIRQHandler( void )
       {
         pxMBFrameCBByteReceived();
       }
-    }      
+    }
+    if(ulStatus&UART_INT_TX)
+        {
+
+        }
 }
