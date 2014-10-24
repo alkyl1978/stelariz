@@ -144,6 +144,6 @@ void prvvMBSerialIRQHandler( void )
     }
     if(ulStatus&UART_INT_TX)
         {
-
+    		pxMBFrameCBTransmitterEmpty();
         }
 }

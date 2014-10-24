@@ -9,10 +9,16 @@ eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCo
     {
       case MB_REG_READ: 
         {
+        *pucRegBuffer=0;
+        pucRegBuffer++;
+        *pucRegBuffer=0;
           break;
         }
     case MB_REG_WRITE:
       {
+    	  *pucRegBuffer=0;
+    	  pucRegBuffer++;
+    	  *pucRegBuffer=0;
           break;
       }
     }
@@ -22,6 +28,9 @@ eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCo
 
 eMBErrorCode eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 {
+	*pucRegBuffer=0;
+	pucRegBuffer++;
+	*pucRegBuffer=0;
     return MB_ENOERR;
 }
 
@@ -32,10 +41,16 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     {
       case MB_REG_READ: 
         {
+        	*pucRegBuffer=0;
+        	pucRegBuffer++;
+        	*pucRegBuffer=0;
           break;
         }
     case MB_REG_WRITE:
       {
+    	  *pucRegBuffer=0;
+    	  pucRegBuffer++;
+    	  *pucRegBuffer=0;
           break;
       }
     }
@@ -46,5 +61,8 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
 
 eMBErrorCode eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
 {
+	*pucRegBuffer=0;
+	pucRegBuffer++;
+	*pucRegBuffer=0;
     return MB_ENOERR;
 }
