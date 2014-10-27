@@ -27,6 +27,7 @@ unsigned long g_Wiz610_fRX;
 unsigned long frab;
 unsigned long cmd_get;
 unsigned long cmd_modbus_switch;
+unsigned long len_data;
 wiz_tcp_rab  modbus_tcp_rab;
 
 
@@ -51,6 +52,7 @@ BOOL xMBTCPPortInit(USHORT port)
 	ROM_UARTDMAEnable(WIZ610_UART_BASE, UART_DMA_TX);
 	ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX);
 	ROM_IntEnable(INT_UDMA);
+	WIZ610Transfer();
 	cmd_modbus_switch=0;
 	g_ulRxBufACount=0;
 	modbus_tcp_rab=MODBUS_TCP_IDLE;
@@ -71,12 +73,13 @@ BOOL xMBTCPPortGetRequest(  UCHAR ** pucMBTCPFrame, USHORT  * usLength )
 BOOL  xMBTCPPortSendResponse (const UCHAR * pucMBTCPFrame, USHORT  usLength)
 {
 
-	ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART0TX | UDMA_PRI_SELECT,
+	ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART1TX | UDMA_PRI_SELECT,
 	        	                               UDMA_MODE_BASIC,(void *)  pucMBTCPFrame,
 	        	                               (void *)(WIZ610_UART_BASE + UART_O_DR),
 											   usLength);
 	ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1TX);
 	modbus_tcp_rab=MODBUS_TCP_IDLE;
+	xMBPortEventPost(EV_READY);
 	return TRUE;
 }
 
@@ -148,11 +151,16 @@ void wiz610_uart_isr(void)
 	    	}
 	    }
 	}
-	    else
-	    {
+	else
+	{
 	    	// работа в режиме модбус
+	    	if(ulStatus==UART_INT_TX)
+	    	{
+	    		g_ulRxBufACount=0;
+
+	    	}
 	    	if(ulStatus==UART_INT_RX)
-	    		    {
+	        {
 	    		if(modbus_tcp_rab==MODBUS_TCP_IDLE)
 	    		{
 	    			g_ulRxBufACount=0;
@@ -166,11 +174,17 @@ void wiz610_uart_isr(void)
 	    						g_ulRxBufACount=(g_ulRxBufACount+1)&0x7f;
 	    			    	}
 
-	    		    }
-	    	   if(g_ulRxBufACount>WIZ_MB_TCP_UID)
+	    	   if(g_ulRxBufACount==WIZ_MB_TCP_UID)
+	    	   {
+	    		   len_data=g_ucRxBuf[4]<<8;
+	    		   len_data|=g_ucRxBuf[5];
+	    		   len_data=g_ulRxBufACount+len_data;
+	    	   }
+	    	   if(g_ulRxBufACount==len_data)
 	    	   {
 	    		   xMBPortEventPost(EV_FRAME_RECEIVED);
 	    	   }
+	        }
 	    }
 }
 
