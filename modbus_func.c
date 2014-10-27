@@ -32,16 +32,10 @@ eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCo
     {
       case MB_REG_READ: 
         {
-        *pucRegBuffer=0;
-        pucRegBuffer++;
-        *pucRegBuffer=0;
           break;
         }
     case MB_REG_WRITE:
       {
-    	  *pucRegBuffer=0;
-    	  pucRegBuffer++;
-    	  *pucRegBuffer=0;
           break;
       }
     }
