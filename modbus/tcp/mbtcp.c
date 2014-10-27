@@ -89,9 +89,9 @@ eMBTCPDoInit( USHORT ucTCPPort )
     return eStatus;
 }
 
-void
-eMBTCPStart( void )
+void eMBTCPStart( void )
 {
+   return;
 }
 
 void

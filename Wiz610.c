@@ -15,21 +15,22 @@
 #include "driverlib/uart.h"
 #include "driverlib/udma.h"
 #include "include/wiz610.h"
+#include "../include/mb.h"
+#include "../include/mbport.h"
 
 unsigned char g_ucTxBuf[128];
 unsigned char g_ucRxBuf[128];
 
 unsigned long g_ulRxBufACount = 0;
+unsigned long g_BufRX_read;
 unsigned long g_Wiz610_fRX;
 unsigned long frab;
 unsigned long cmd_get;
 unsigned long cmd_modbus_switch;
-unsigned int PID;
-unsigned int TID;
 wiz_tcp_rab  modbus_tcp_rab;
 
 
-void xMBTCPPortInit(unsigned int port)
+BOOL xMBTCPPortInit(USHORT port)
 {
 	ROM_SysCtlPeripheralEnable(WIZ610_GPIO_PERIPH);
 	ROM_GPIODirModeSet(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE ,GPIO_DIR_MODE_OUT);
@@ -52,20 +53,25 @@ void xMBTCPPortInit(unsigned int port)
 	ROM_IntEnable(INT_UDMA);
 	cmd_modbus_switch=0;
 	g_ulRxBufACount=0;
+	modbus_tcp_rab=MODBUS_TCP_IDLE;
+	return TRUE;
 }
 
 void vMBTCPPortDisable(void)
 {
 
 }
-unsigned long xMBTCPPortGetRequest(  unsigned char * pucMBTCPFrame, unsigned char  usLength )
+BOOL xMBTCPPortGetRequest(  UCHAR ** pucMBTCPFrame, USHORT  * usLength )
 {
-
+	*pucMBTCPFrame=g_ucRxBuf;
+	*usLength=g_ulRxBufACount;
+	return TRUE;
 }
 
-unsigned long xMBTCPPortSendResponse (unsigned char * pucMBTCPFrame, unsigned char  usLength)
+BOOL  xMBTCPPortSendResponse (const UCHAR * pucMBTCPFrame, USHORT  usLength)
 {
 
+	return TRUE;
 }
 
 void wiz610_init(void)
@@ -141,6 +147,12 @@ void wiz610_uart_isr(void)
 	    	// работа в режиме модбус
 	    	if(ulStatus==UART_INT_RX)
 	    		    {
+	    		if(modbus_tcp_rab==MODBUS_TCP_IDLE)
+	    		{
+	    			g_ulRxBufACount=0;
+	    			modbus_tcp_rab=MODBUS_TCP_RCV;
+	    			xMBPortEventPost(EV_READY);
+	    		}
 	    		while(!(HWREG(WIZ610_UART_BASE + UART_O_FR) & UART_FR_RXFE))
 	    			    	{
 	    						data=HWREG(WIZ610_UART_BASE+UART_O_DR);
@@ -149,6 +161,10 @@ void wiz610_uart_isr(void)
 	    			    	}
 
 	    		    }
+	    	   if(g_ulRxBufACount>WIZ_MB_TCP_UID)
+	    	   {
+	    		   xMBPortEventPost(EV_FRAME_RECEIVED);
+	    	   }
 	    }
 }
 

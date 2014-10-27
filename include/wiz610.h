@@ -11,6 +11,9 @@
 
 #define wiz_char_start '<'
 #define wiz_char_stop  '>'
+#define WIZ_MB_TCP_UID          6
+#define MB_TCP_TID          0
+#define MB_TCP_PID          2
 
 typedef enum
 {
@@ -25,6 +28,8 @@ typedef enum
 	MODBUS_TCP_IDLE,
 	MODBUS_TCP_RCV
 }wiz_tcp_rab;
+
+
 
 void wiz610_init(void);
 void WIZ610Transfer(void);
