@@ -24,22 +24,46 @@ unsigned long g_Wiz610_fRX;
 unsigned long frab;
 unsigned long cmd_get;
 unsigned long cmd_modbus_switch;
+unsigned int PID;
+unsigned int TID;
+wiz_tcp_rab  modbus_tcp_rab;
 
-void xMBTCPPortInit(void)
+
+void xMBTCPPortInit(unsigned int port)
 {
-
+	ROM_SysCtlPeripheralEnable(WIZ610_GPIO_PERIPH);
+	ROM_GPIODirModeSet(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE ,GPIO_DIR_MODE_OUT);
+	ROM_GPIOPadConfigSet(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,GPIO_STRENGTH_8MA,GPIO_PIN_TYPE_STD_WPU);
+	ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,WIZ610_GPIO_PIN_CMD_ENABLE);
+	  // uart setup
+	ROM_SysCtlPeripheralEnable(WIZ610_UART_PERIPH);
+	ROM_GPIOPinConfigure(GPIO_PB0_U1RX);
+	ROM_GPIOPinConfigure(GPIO_PB1_U1TX);
+	ROM_GPIOPinTypeUART(WIZ610_GPIO_BASE, WIZ610_GPIO_PIN_RX | WIZ610_GPIO_PIN_TX);
+	ROM_UARTConfigSetExpClk(WIZ610_UART_BASE, ROM_SysCtlClockGet(), 38400,
+	                            (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+	                             UART_CONFIG_PAR_NONE));
+	ROM_GPIOPinWrite(WIZ610_GPIO_BASE,WIZ610_GPIO_PIN_CMD_ENABLE,WIZ610_GPIO_PIN_CMD_ENABLE);
+	ROM_UARTFIFOLevelSet(WIZ610_UART_BASE, UART_FIFO_TX4_8, UART_FIFO_RX1_8);
+	ROM_IntEnable(INT_UART1);
+	ROM_UARTEnable(WIZ610_UART_BASE);
+	ROM_UARTDMAEnable(WIZ610_UART_BASE, UART_DMA_TX);
+	ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX);
+	ROM_IntEnable(INT_UDMA);
+	cmd_modbus_switch=0;
+	g_ulRxBufACount=0;
 }
 
 void vMBTCPPortDisable(void)
 {
 
 }
-unsigned long xMBTCPPortGetRequest(  unsigned char * pucMBTCPFrame, unsigned char * usLength )
+unsigned long xMBTCPPortGetRequest(  unsigned char * pucMBTCPFrame, unsigned char  usLength )
 {
 
 }
 
-unsigned long xMBTCPPortSendResponse (unsigned char * pucMBTCPFrame, unsigned char * usLength)
+unsigned long xMBTCPPortSendResponse (unsigned char * pucMBTCPFrame, unsigned char  usLength)
 {
 
 }
@@ -117,6 +141,12 @@ void wiz610_uart_isr(void)
 	    	// работа в режиме модбус
 	    	if(ulStatus==UART_INT_RX)
 	    		    {
+	    		while(!(HWREG(WIZ610_UART_BASE + UART_O_FR) & UART_FR_RXFE))
+	    			    	{
+	    						data=HWREG(WIZ610_UART_BASE+UART_O_DR);
+	    						g_ucRxBuf[g_ulRxBufACount]=data;
+	    						g_ulRxBufACount=(g_ulRxBufACount+1)&0x7f;
+	    			    	}
 
 	    		    }
 	    }

@@ -20,6 +20,12 @@ typedef enum
 	WIZ_STOP
 }wiz_rab;
 
+typedef enum
+{
+	MODBUS_TCP_IDLE,
+	MODBUS_TCP_RCV
+}wiz_tcp_rab;
+
 void wiz610_init(void);
 void WIZ610Transfer(void);
 unsigned char Wiz610_put_buf(unsigned char *buf, unsigned long count);

@@ -101,8 +101,7 @@ eMBTCPStop( void )
     vMBTCPPortDisable( );
 }
 
-eMBErrorCode
-eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, USHORT * pusLength )
+eMBErrorCode eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, USHORT * pusLength )
 {
     eMBErrorCode    eStatus = MB_EIO;
     UCHAR          *pucMBTCPFrame;
@@ -133,8 +132,7 @@ eMBTCPReceive( UCHAR * pucRcvAddress, UCHAR ** ppucFrame, USHORT * pusLength )
     return eStatus;
 }
 
-eMBErrorCode
-eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame, USHORT usLength )
+eMBErrorCode eMBTCPSend( UCHAR _unused, const UCHAR * pucFrame, USHORT usLength )
 {
     eMBErrorCode    eStatus = MB_ENOERR;
     UCHAR          *pucMBTCPFrame = ( UCHAR * ) pucFrame - MB_TCP_FUNC;

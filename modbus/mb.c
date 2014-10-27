@@ -333,8 +333,7 @@ eMBDisable( void )
     return eStatus;
 }
 
-eMBErrorCode
-eMBPoll( void )
+eMBErrorCode eMBPoll( void )
 {
     static UCHAR   *ucMBFrame;
     static UCHAR    ucRcvAddress;
