@@ -25,6 +25,8 @@ extern volatile unsigned long serv_X_0;
 extern volatile unsigned long serv_Y_0;
 extern volatile unsigned long serv_Z_0;
 
+volatile unsigned char flag;
+
 eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
                eMBRegisterMode eMode )
 {
@@ -32,10 +34,12 @@ eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCo
     {
       case MB_REG_READ: 
         {
+          *pucRegBuffer=flag;
           break;
         }
     case MB_REG_WRITE:
       {
+    	  flag=*pucRegBuffer;
           break;
       }
     }
