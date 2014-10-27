@@ -51,13 +51,6 @@ eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCo
 
 eMBErrorCode eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 {
-	USHORT count;
-	count=usNRegs<<2;
-	while (count)
-	{
-		*pucRegBuffer++=0;
-		 count--;
-	}
     return MB_ENOERR;
 }
 
@@ -104,6 +97,8 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     		  pucRegBuffer++;
     		  serv_X_Angle|=*pucRegBuffer&0xff;
     		  pucRegBuffer++;
+    		  serv_X_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_X_Angle;
+    		   ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, serv_X_0);
     	  }
     	  if(usAddr==2)
     	  {
@@ -111,6 +106,8 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     		  pucRegBuffer++;
     		  serv_Y_Angle|=*pucRegBuffer&0xff;
     		  pucRegBuffer++;
+    		  serv_Y_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Y_Angle;
+    		  ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, serv_Y_0);
     	  }
     	  if(usAddr==3)
     	  {
@@ -118,16 +115,12 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     		  pucRegBuffer++;
     		  serv_Z_Angle|=*pucRegBuffer&0xff;
     		  pucRegBuffer++;
+    		  serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Z_Angle;
+    		  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_Z_0);
     	  }
     	  count--;
     	  usAddr++;
     	  }
-    	  serv_X_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_X_Angle;
-    	  serv_Y_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Y_Angle;
-    	  serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Z_Angle;
-    	  ROM_TimerMatchSet(SERV_X_TIMER_BASE, SERV_X_TIMER, serv_X_0);
-    	  ROM_TimerMatchSet(SERV_Y_TIMER_BASE, SERV_Y_TIMER, serv_Y_0);
-    	  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_Z_0);
           break;
       }
     }
@@ -136,8 +129,5 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
 
 eMBErrorCode eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
 {
-	*pucRegBuffer=0;
-	pucRegBuffer++;
-	*pucRegBuffer=0;
     return MB_ENOERR;
 }
