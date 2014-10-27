@@ -23,6 +23,26 @@ unsigned long g_ulRxBufACount = 0;
 unsigned long g_Wiz610_fRX;
 unsigned long frab;
 unsigned long cmd_get;
+unsigned long cmd_modbus_switch;
+
+void xMBTCPPortInit(void)
+{
+
+}
+
+void vMBTCPPortDisable(void)
+{
+
+}
+unsigned long xMBTCPPortGetRequest(  unsigned char * pucMBTCPFrame, unsigned char * usLength )
+{
+
+}
+
+unsigned long xMBTCPPortSendResponse (unsigned char * pucMBTCPFrame, unsigned char * usLength)
+{
+
+}
 
 void wiz610_init(void)
 {
@@ -45,6 +65,7 @@ void wiz610_init(void)
   ROM_UARTDMAEnable(WIZ610_UART_BASE, UART_DMA_TX);
   ROM_UARTIntEnable(WIZ610_UART_BASE, UART_INT_RX);
   ROM_IntEnable(INT_UDMA);
+  cmd_modbus_switch=1;
 }
 
 void wiz610_uart_isr(void)
@@ -54,6 +75,9 @@ void wiz610_uart_isr(void)
 		unsigned char data;
 	    ulStatus = ROM_UARTIntStatus(WIZ610_UART_BASE, true);
 	    ROM_UARTIntClear(WIZ610_UART_BASE, ulStatus);
+	    if(cmd_modbus_switch)
+	    {
+	    	// работа с модулем в командном режиме
 	    if(ulStatus==UART_INT_RX)
 	    {
 	    	g_Wiz610_fRX=true;
@@ -86,6 +110,15 @@ void wiz610_uart_isr(void)
 	    		}
 
 	    	}
+	    }
+	}
+	    else
+	    {
+	    	// работа в режиме модбус
+	    	if(ulStatus==UART_INT_RX)
+	    		    {
+
+	    		    }
 	    }
 }
 

@@ -142,6 +142,7 @@ eMBErrorCode eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, ULONG u
         {
 #if MB_RTU_ENABLED > 0
         case MB_RTU:
+        {
             pvMBFrameStartCur = eMBRTUStart;
             pvMBFrameStopCur = eMBRTUStop;
             peMBFrameSendCur = eMBRTUSend;
@@ -150,9 +151,16 @@ eMBErrorCode eMBInit( eMBMode eMode, UCHAR ucSlaveAddress, UCHAR ucPort, ULONG u
             pxMBFrameCBByteReceived = xMBRTUReceiveFSM;
             pxMBFrameCBTransmitterEmpty = xMBRTUTransmitFSM;
             pxMBPortCBTimerExpired = xMBRTUTimerT35Expired;
-
             eStatus = eMBRTUInit( ucMBAddress, ucPort, ulBaudRate, eParity );
             break;
+        }
+#endif
+#if MB_TCP_ENABLED > 0
+        case MB_TCP:
+        {
+        	eMBTCPInit(5000);
+        	break;
+        }
 #endif
 #if MB_ASCII_ENABLED > 0
         case MB_ASCII:
