@@ -71,6 +71,12 @@ BOOL xMBTCPPortGetRequest(  UCHAR ** pucMBTCPFrame, USHORT  * usLength )
 BOOL  xMBTCPPortSendResponse (const UCHAR * pucMBTCPFrame, USHORT  usLength)
 {
 
+	ROM_uDMAChannelTransferSet(UDMA_CHANNEL_UART0TX | UDMA_PRI_SELECT,
+	        	                               UDMA_MODE_BASIC,(void *)  pucMBTCPFrame,
+	        	                               (void *)(WIZ610_UART_BASE + UART_O_DR),
+											   usLength);
+	ROM_uDMAChannelEnable(UDMA_CHANNEL_UART1TX);
+	modbus_tcp_rab=MODBUS_TCP_IDLE;
 	return TRUE;
 }
 
