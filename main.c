@@ -39,9 +39,9 @@ volatile unsigned long serv_X_0=0;
 volatile unsigned long serv_Y_0=0;
 volatile unsigned long serv_Z_0=0;
 
-volatile unsigned long serv_X_Angle=90;
-volatile unsigned long serv_Y_Angle=90;
-volatile unsigned long serv_Z_Angle=80;
+volatile unsigned int serv_X_Angle=90;
+volatile unsigned int serv_Y_Angle=90;
+volatile unsigned int serv_Z_Angle=80;
 
 volatile unsigned long dvig_napr[1];
 //****************************************************************************************
