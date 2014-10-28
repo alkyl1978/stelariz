@@ -14,8 +14,11 @@
 #include "include/led.h"
 #include "include/dvig.h"
 #include "include/dat_scor.h"
+#include "include/dvig.h"
 #include "mb.h"
 
+unsigned int Dvig1;
+unsigned int Dvig2;
 
 extern volatile unsigned int serv_X_Angle;
 extern volatile unsigned int serv_Y_Angle;
@@ -24,6 +27,8 @@ extern volatile unsigned int serv_Z_Angle;
 extern volatile unsigned long serv_X_0;
 extern volatile unsigned long serv_Y_0;
 extern volatile unsigned long serv_Z_0;
+
+extern volatile unsigned long tick_dvig;
 
 eMBErrorCode eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
                eMBRegisterMode eMode )
@@ -57,9 +62,10 @@ eMBErrorCode eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRe
 eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
                  eMBRegisterMode eMode )
 {
-	USHORT count,usAddr;
+	USHORT count,usAddr,temp;
 	count=usNRegs;
 	usAddr=usAddress;
+	temp=(tick_dvig-1)/100;
     switch(eMode)
     {
       case MB_REG_READ: 
@@ -80,6 +86,16 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
         	{
         	    *pucRegBuffer++=(serv_Z_Angle>>8)&0xff;
         	    *pucRegBuffer++=serv_Z_Angle&0xff;
+        	}
+        	if(usAddr==4)
+        	{
+        	    *pucRegBuffer++=(Dvig1>>8)&0xff;
+        	    *pucRegBuffer++=Dvig1&0xff;
+        	}
+        	if(usAddr==5)
+        	{
+        	    *pucRegBuffer++=(Dvig2>>8)&0xff;
+        	    *pucRegBuffer++=Dvig2&0xff;
         	}
         	count--;
         	usAddr++;
@@ -117,6 +133,24 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     		  pucRegBuffer++;
     		  serv_Z_0=ROM_SysCtlClockGet()/1400+(ROM_SysCtlClockGet()/112000)*serv_Z_Angle;
     		  ROM_TimerMatchSet(SERV_Z_TIMER_BASE, SERV_Z_TIMER, serv_Z_0);
+    	  }
+    	  if(usAddr==4)
+    	  {
+    	      Dvig1=*pucRegBuffer>>8;
+    	      pucRegBuffer++;
+    	      Dvig1|=*pucRegBuffer&0xff;
+    	      pucRegBuffer++;
+    	      Dvig1=temp*Dvig1;
+    	      ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER, Dvig1);
+    	  }
+    	  if(usAddr==5)
+    	  {
+    	     Dvig2=*pucRegBuffer>>8;
+    	     pucRegBuffer++;
+    	     Dvig2|=*pucRegBuffer&0xff;
+    	     pucRegBuffer++;
+    	     Dvig2=Dvig2*temp;
+    	     ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER, Dvig2);
     	  }
     	  count--;
     	  usAddr++;
