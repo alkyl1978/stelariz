@@ -19,6 +19,7 @@
 
 unsigned int Dvig1;
 unsigned int Dvig2;
+unsigned int Dvig3;
 
 extern volatile unsigned int serv_X_Angle;
 extern volatile unsigned int serv_Y_Angle;
@@ -95,6 +96,11 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
         	    *pucRegBuffer++=(Dvig2>>8)&0xff;
         	    *pucRegBuffer++=Dvig2&0xff;
         	}
+        	if(usAddr==6)
+        	{
+        	    *pucRegBuffer++=(Dvig3>>8)&0xff;
+        	    *pucRegBuffer++=Dvig3&0xff;
+        	 }
         	count--;
         	usAddr++;
           }
@@ -138,8 +144,7 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     	      pucRegBuffer++;
     	      Dvig1|=*pucRegBuffer&0xff;
     	      pucRegBuffer++;
-    	      Dvig1=temp*Dvig1;
-    	      ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER, Dvig1);
+    	      ROM_TimerMatchSet(PWM0_TIMER_BASE, PWM0_TIMER, Dvig1*temp);
     	  }
     	  if(usAddr==5)
     	  {
@@ -147,9 +152,16 @@ eMBErrorCode eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usN
     	     pucRegBuffer++;
     	     Dvig2|=*pucRegBuffer&0xff;
     	     pucRegBuffer++;
-    	     Dvig2=Dvig2*temp;
-    	     ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER, Dvig2);
+    	     ROM_TimerMatchSet(PWM1_TIMER_BASE, PWM1_TIMER, Dvig2*temp);
     	  }
+    	  if(usAddr==6)
+    	  {
+    	     Dvig3=*pucRegBuffer>>8;
+    	     pucRegBuffer++;
+    	     Dvig3|=*pucRegBuffer&0xff;
+    	     pucRegBuffer++;
+    	     ROM_TimerMatchSet(PWM2_TIMER_BASE, PWM2_TIMER, Dvig3*temp);
+    	   }
     	  count--;
     	  usAddr++;
     	  }

@@ -10,7 +10,7 @@
 #define DB5_GPIO_PIN            GPIO_PIN_5
 #define DB4_GPIO_PIN            GPIO_PIN_4
 #define RS_GPIO_PIN             GPIO_PIN_3
-#define EN_GPIO_PIN              GPIO_PIN_2
+#define EN_GPIO_PIN             GPIO_PIN_2
 
 
 #define	LCD_RS(x)       ( (x) ? (ROM_GPIOPinWrite(GPIO_PORTA_BASE,RS_GPIO_PIN,RS_GPIO_PIN)) : (ROM_GPIOPinWrite(GPIO_PORTA_BASE,RS_GPIO_PIN,0)) )
