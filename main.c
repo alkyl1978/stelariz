@@ -149,9 +149,6 @@ void ind_wiz610_wi_fi(void)
 	  lcd_goto(0,0);
 	  lcd_puts("WI-FI RUN");
 	  lcd_goto(1,0);
-	  lcd_puts("ver :");
-	  lcd_goto(1,6);
-	  lcd_puts(&buf_rab[1]);
 	  Wiz610_cmd_get=false;
 	  Wiz610_put_buf("<DS>",4);
 	  Sys_tick=0;
@@ -163,24 +160,23 @@ void ind_wiz610_wi_fi(void)
 	 		Sys_tick=0;
 	 	}
 	   }
-	  lcd_goto(2,0);
+	  lcd_goto(1,0);
 	  lcd_puts("SSID :");
-	  lcd_goto(2,7);
+	  lcd_goto(1,7);
 	  lcd_puts(&buf_rab[1]);
-
 	  Wiz610_cmd_get=false;
 	  Wiz610_put_buf("<RI>",4);
-	  Sys_tick=0;
-	  while(!Wiz610_cmd_get)
-	  {
-	   	if(Sys_tick>100)
-	   	{
-	   		Wiz610_put_buf("<RI>",4);
-	   		Sys_tick=0;
-	   	}
-	  }
-	  lcd_goto(3,0);
+	  while(!Wiz610_cmd_get);
+	  lcd_goto(2,0);
 	  lcd_puts("IP:");
-	  lcd_goto(3,3);
+	  lcd_goto(2,3);
 	  lcd_puts(&buf_rab[1]);
+	  Wiz610_cmd_get=false;
+	  Wiz610_put_buf("<RP>",4);
+	  while(!Wiz610_cmd_get);
+	  lcd_goto(3,0);
+	  lcd_puts("PORT:");
+	  lcd_goto(3,6);
+	  lcd_puts(&buf_rab[1]);
+	  Wiz610_cmd_get=false;
 }
