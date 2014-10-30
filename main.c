@@ -107,9 +107,9 @@ int main()
   lcd_goto(0,0);
   lcd_puts("---------------"); 
   lcd_goto(1,0);
-  lcd_puts("    *SPEZ*     ");
+  lcd_puts("    *CæeÂΩa∑*     ");
   lcd_goto(2,0);
-  lcd_puts(" *STACK-SPORT* "); 
+  lcd_puts(" *Cøe∫-Cæopø* ");
   lcd_goto(3,0);
   lcd_puts("---------------"); 
   ROM_IntMasterEnable();
@@ -119,7 +119,7 @@ int main()
   while(Sys_tick>1000);
   lcd_temizle();
   lcd_goto(0,0);
-  lcd_puts("WI-FI INIT");
+  lcd_puts("WI-FI §aæyc∫aeøc«");
   ind_wiz610_wi_fi();
   //*******************************************************************************************
   eMBInit(MB_TCP,0x01,1,38400,MB_PAR_NONE);
@@ -147,7 +147,7 @@ void ind_wiz610_wi_fi(void)
 	  if (Wiz610_cmd_get<2) goto start1;
 	  lcd_temizle();
 	  lcd_goto(0,0);
-	  lcd_puts("WI-FI RUN");
+	  lcd_puts("WI-FI Pa≤oøaeø");
 	  lcd_goto(1,0);
 	  Wiz610_cmd_get=false;
 	  Wiz610_put_buf("<DS>",4);
