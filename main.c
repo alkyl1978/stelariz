@@ -1,10 +1,10 @@
-#include "inc/hw_ints.h"
-#include "inc/hw_gpio.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_sysctl.h"
-#include "inc/hw_types.h"
-#include "inc/hw_timer.h"
-#include "inc/hw_uart.h"
+#include "driverlib/hw_ints.h"
+#include "driverlib/hw_gpio.h"
+#include "driverlib/hw_memmap.h"
+#include "driverlib/hw_sysctl.h"
+#include "driverlib/hw_types.h"
+#include "driverlib/hw_timer.h"
+#include "driverlib/hw_uart.h"
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/interrupt.h"
@@ -107,9 +107,9 @@ int main()
   lcd_goto(0,0);
   lcd_puts("---------------"); 
   lcd_goto(1,0);
-  lcd_puts("    *C¾eå½a·*     ");
+  lcd_puts("    *Cï¿½eï¿½aï¿½*     ");
   lcd_goto(2,0);
-  lcd_puts(" *C¿eº-C¾op¿* ");
+  lcd_puts(" *Cï¿½eï¿½-Cï¿½opï¿½* ");
   lcd_goto(3,0);
   lcd_puts("---------------"); 
   ROM_IntMasterEnable();
@@ -119,7 +119,7 @@ int main()
   while(Sys_tick>1000);
   lcd_temizle();
   lcd_goto(0,0);
-  lcd_puts("WI-FI ¤a¾ycºae¿cÇ");
+  lcd_puts("WI-FI ï¿½aï¿½ycï¿½aeï¿½cï¿½");
   ind_wiz610_wi_fi();
   //*******************************************************************************************
   eMBInit(MB_TCP,0x01,1,38400,MB_PAR_NONE);
@@ -147,7 +147,7 @@ void ind_wiz610_wi_fi(void)
 	  if (Wiz610_cmd_get<2) goto start1;
 	  lcd_temizle();
 	  lcd_goto(0,0);
-	  lcd_puts("WI-FI Pa²o¿ae¿");
+	  lcd_puts("WI-FI Paï¿½oï¿½aeï¿½");
 	  lcd_goto(1,0);
 	  Wiz610_cmd_get=false;
 	  Wiz610_put_buf("<DS>",4);

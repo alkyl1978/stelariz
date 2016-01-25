@@ -1,11 +1,11 @@
-#include "inc/hw_ints.h"
-#include "inc/hw_gpio.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_sysctl.h"
-#include "inc/hw_types.h"
-#include "inc/hw_timer.h"
-#include "inc/hw_udma.h"
-#include "inc/hw_uart.h"
+#include "driverlib/hw_ints.h"
+#include "driverlib/hw_gpio.h"
+#include "driverlib/hw_memmap.h"
+#include "driverlib/hw_sysctl.h"
+#include "driverlib/hw_types.h"
+#include "driverlib/hw_timer.h"
+#include "driverlib/hw_udma.h"
+#include "driverlib/hw_uart.h"
 #include "driverlib/gpio.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/interrupt.h"
@@ -116,7 +116,7 @@ void wiz610_uart_isr(void)
 	    ROM_UARTIntClear(WIZ610_UART_BASE, ulStatus);
 	    if(cmd_modbus_switch)
 	    {
-	    	// работа с модулем в командном режиме
+	    	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	    if(ulStatus==UART_INT_RX)
 	    {
 	    	g_Wiz610_fRX=true;
@@ -153,7 +153,7 @@ void wiz610_uart_isr(void)
 	}
 	else
 	{
-	    	// работа в режиме модбус
+	    	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	    	if(ulStatus==UART_INT_TX)
 	    	{
 	    		g_ulRxBufACount=0;

@@ -1,7 +1,7 @@
 #ifndef _PORT_H
 #define _PORT_H
 
-#include "../../inc/hw_memmap.h"
+#include "../../driverlib/hw_memmap.h"
 
 /* ----------------------- Defines ------------------------------------------*/
 #define	INLINE
